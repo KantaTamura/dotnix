@@ -9,8 +9,7 @@
   outputs =
     inputs@{ self, nixpkgs, ... }:
     {
-      # NOTE: 'nixos' is the default hostname
-      nixosConfigurations.nixos = nixpkgs.lib.nixosSystem {
+      nixosConfigurations.ms-a2 = nixpkgs.lib.nixosSystem {
         modules = [ ./configuration.nix ];
       };
     };

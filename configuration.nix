@@ -20,6 +20,13 @@
   boot.loader.efi.canTouchEfiVariables = true;
 
   # networking.hostName = "nixos"; # Define your hostname.
+  networking.hostName = "ms-a2";
+
+  networking.extraHosts = ''
+    127.0.0.1 localhost
+    ::1 localhost
+    127.0.1.1 ms-a2.localdomain ms-a2
+  '';
 
   # Configure network connections interactively with nmcli or nmtui.
   networking.networkmanager.enable = true;
@@ -75,8 +82,17 @@
   #     tree
   #   ];
   # };
+  users.users.kanta = {
+    isNormalUser = true;
+    description = "Kanta Tamura";
+    shell = pkgs.zsh;
+    extraGroups = [ "wheel" ]; # sudo
+  };
 
   # programs.firefox.enable = true;
+  programs.zsh.enable = true;
+
+  security.sudo.enable = true;
 
   # List packages installed in system profile.
   # You can use https://search.nixos.org/ to find more packages (and options).
