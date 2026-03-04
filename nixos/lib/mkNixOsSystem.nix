@@ -54,13 +54,13 @@ nixpkgs.lib.nixosSystem {
   };
 
   modules = [
-    ../modules/base.nix
-    ../modules/locale-ja.nix
-    ../modules/zram.nix
-    ../modules/openssh-hardening.nix
-    ../modules/users/kanta.nix
+    (self + /nixos/modules/base.nix)
+    (self + /nixos/modules/locale-ja.nix)
+    (self + /nixos/modules/zram.nix)
+    (self + /nixos/modules/openssh-hardening.nix)
+    (self + /nixos/modules/users/kanta.nix)
 
-    ../hosts/${hostName}
+    (self + /nixos/hosts/${hostName})
   ]
   ++ extraModules;
 }

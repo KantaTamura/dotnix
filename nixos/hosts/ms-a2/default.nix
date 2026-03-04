@@ -1,10 +1,10 @@
-{ ... }:
+{ self, hostName, ... }:
 {
   imports = [
-    ./hardware-configuration.nix
-    ./networking.nix
+    (self + /nixos/hosts/${hostName}/hardware-configuration.nix)
+    (self + /nixos/hosts/${hostName}/networking.nix)
   ];
 
-  networking.hostName = "ms-a2";
+  networking.hostName = hostName;
   system.stateVersion = "25.11";
 }
