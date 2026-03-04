@@ -31,7 +31,11 @@
     system        Target system (default: "x86_64-linux")
     extraModules  Additional NixOS modules appended to the module list
 */
-{ nixpkgs }:
+{
+  inputs,
+  self,
+  nixpkgs,
+}:
 {
   hostName,
   system ? "x86_64-linux",
@@ -40,6 +44,14 @@
 
 nixpkgs.lib.nixosSystem {
   inherit system;
+
+  specialArgs = {
+    inherit
+      inputs
+      self
+      hostName
+      ;
+  };
 
   modules = [
     ../modules/base.nix
