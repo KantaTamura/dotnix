@@ -73,6 +73,12 @@
 
   # Enable touchpad support (enabled default in most desktopManager).
   # services.libinput.enable = true;
+  services.openssh.enable = true;
+  services.openssh.settings = {
+    PasswordAuthentication = false;
+    KbdInteractiveAuthentication = false;
+    PermitRootLogin = "no";
+  };
 
   # Define a user account. Don't forget to set a password with ‘passwd’.
   # users.users.alice = {
@@ -88,6 +94,9 @@
     shell = pkgs.zsh;
     extraGroups = [ "wheel" ]; # sudo
   };
+  users.users.kanta.openssh.authorizedKeys.keys = [
+    "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIIUXZIigZ+berBnrBxykvRe9Sn6D+URl7gy+cRDVxJqv"
+  ];
 
   # programs.firefox.enable = true;
   programs.zsh.enable = true;
