@@ -1,6 +1,7 @@
 { self, ... }:
 {
   imports = [
-    (self + /modules/common/shell/zsh.nix)
+    (self + /home/profiles/cli.nix)
+    (self + /home/profiles/dev.nix)
   ];
 }
