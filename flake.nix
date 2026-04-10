@@ -43,7 +43,7 @@
       darwinConfigurations = { };
 
       homeConfigurations = {
-        "kanta@ms-a2" = mkHome {
+        kanta = mkHome {
           system = "x86_64-linux";
           username = "kanta";
           homeDirectory = "/home/kanta";

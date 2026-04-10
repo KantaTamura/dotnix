@@ -27,13 +27,13 @@ sudo nixos-rebuild switch --flake github:KantaTamura/dotnix#ms-a2
 Apply the standalone Home Manager configuration:
 
 ```bash
-home-manager switch --flake github:KantaTamura/dotnix#kanta@ms-a2
+home-manager switch --flake github:KantaTamura/dotnix#kanta
 ```
 
 If Home Manager is not installed yet, run it through Nix:
 
 ```bash
-nix run github:nix-community/home-manager -- switch --flake github:KantaTamura/dotnix#kanta@ms-a2
+nix run github:nix-community/home-manager -- switch --flake github:KantaTamura/dotnix#kanta
 ```
 
 ### nix-darwin
