@@ -21,13 +21,13 @@
     }:
     let
       mkNixosSystem = import ./lib/mkNixosSystem.nix {
-        inherit inputs self nixpkgs;
+        inherit inputs self nixpkgs home-manager;
       };
       mkDarwinSystem = import ./lib/mkDarwinSystem.nix {
         inherit inputs self nixpkgs nix-darwin;
       };
       mkHome = import ./lib/mkHome.nix {
-        inherit inputs nixpkgs home-manager;
+        inherit inputs self nixpkgs home-manager;
       };
     in
     {
@@ -35,11 +35,22 @@
         ms-a2 = mkNixosSystem {
           system = "x86_64-linux";
           hostName = "ms-a2";
+          userName = "kanta";
+          homeDirectory = "/home/kanta";
         };
       };
 
       darwinConfigurations = { };
 
-      homeConfigurations = { };
+      homeConfigurations = {
+        "kanta@ms-a2" = mkHome {
+          system = "x86_64-linux";
+          username = "kanta";
+          homeDirectory = "/home/kanta";
+          extraModules = [
+            ./home/users/kanta
+          ];
+        };
+      };
     };
 }

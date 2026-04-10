@@ -1,5 +1,6 @@
 {
   inputs,
+  self,
   nixpkgs,
   home-manager,
 }:
@@ -18,6 +19,7 @@ home-manager.lib.homeManagerConfiguration {
   extraSpecialArgs = {
     inherit
       inputs
+      self
       username
       homeDirectory
       ;
