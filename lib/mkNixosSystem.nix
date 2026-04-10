@@ -23,7 +23,7 @@ nixpkgs.lib.nixosSystem {
   modules = [
     (self + /profiles/nixos/base.nix)
     (self + /nixos/modules/users/kanta.nix)
-    (self + /nixos/hosts/${hostName})
+    (self + /hosts/nixos/${hostName})
   ]
   ++ extraModules;
 }
