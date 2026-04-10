@@ -43,3 +43,25 @@ This repository already includes `nix-darwin` as a flake input, but `darwinConfi
 ```bash
 darwin-rebuild switch --flake github:KantaTamura/dotnix#macbook
 ```
+
+## Verify
+
+You can verify that the flake evaluates and builds the expected outputs without switching immediately.
+
+Check the NixOS system build:
+
+```bash
+nix build github:KantaTamura/dotnix#nixosConfigurations.ms-a2.config.system.build.toplevel
+```
+
+Check the Home Manager activation package:
+
+```bash
+nix build github:KantaTamura/dotnix#homeConfigurations.kanta.activationPackage
+```
+
+Check available flake outputs:
+
+```bash
+nix flake show github:KantaTamura/dotnix
+```
