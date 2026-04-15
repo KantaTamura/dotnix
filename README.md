@@ -47,7 +47,6 @@ The following still need to be handled outside Home Manager:
 
 - installing Nix itself
 - changing the login shell with `chsh`
-- `/etc` changes such as system-wide `zshenv`
 - OS locale generation and other root-owned system settings
 
 ### nix-darwin

@@ -1,6 +1,38 @@
-{ config, pkgs, ... }:
+{
+  config,
+  lib,
+  pkgs,
+  self,
+  ...
+}:
+let
+  configDir = self + /config;
+  recursiveConfigDirs = [
+    "nvim"
+    "zsh"
+  ];
+  configFiles = [
+    "sheldon/plugins.toml"
+    "starship.toml"
+  ];
+  mkRecursiveConfigEntry = name: {
+    name = name;
+    value = {
+      source = configDir + "/${name}";
+      recursive = true;
+    };
+  };
+  mkConfigFileEntry = name: {
+    name = name;
+    value.source = configDir + "/${name}";
+  };
+in
 {
   xdg.enable = true;
+
+  xdg.configFile =
+    builtins.listToAttrs (map mkRecursiveConfigEntry recursiveConfigDirs)
+    // builtins.listToAttrs (map mkConfigFileEntry configFiles);
 
   home.sessionVariables = {
     EDITOR = "nvim";
@@ -18,6 +50,7 @@
     ripgrep
     sheldon
     sqlite
+    starship
     tree-sitter
     unzip
   ];
@@ -59,19 +92,23 @@
     withRuby = false;
   };
 
-  programs.starship.enable = true;
-
   programs.zoxide = {
     enable = true;
-    enableZshIntegration = true;
+    enableZshIntegration = false;
   };
 
   programs.zsh = {
     enable = true;
     dotDir = "${config.xdg.configHome}/zsh";
-    autosuggestion.enable = true;
-    enableCompletion = true;
-    syntaxHighlighting.enable = true;
     history.path = "${config.xdg.stateHome}/zsh/history";
+    initContent = lib.mkMerge [
+      (lib.mkBefore ''
+        mkdir -p ${config.xdg.stateHome}/zsh
+        eval "$(sheldon source)"
+      '')
+      ''
+        source ${config.xdg.configHome}/zsh/config.zsh
+      ''
+    ];
   };
 }

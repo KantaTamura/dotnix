@@ -1,0 +1,51 @@
+shell = "zsh"
+
+[templates]
+defer = "{% for file in files %}zsh-defer -t 0.0001 source \"{{ file }}\"\n{% endfor %}"
+
+[plugins.zsh-defer]
+github = "romkatv/zsh-defer"
+hooks.post = '''
+zsh-defer source $XDG_CONFIG_HOME/zsh/config_lazy.zsh
+zsh-defer -t 0.001 autoload -Uz compinit
+zsh-defer -t 0.001 compinit
+'''
+
+[plugins.autopair]
+github = "hlissner/zsh-autopair"
+apply = ["defer"]
+
+[plugins.zsh-completions]
+github = 'zsh-users/zsh-completions'
+apply = ["defer"]
+
+[plugins.zsh-autosuggestions]
+github = 'zsh-users/zsh-autosuggestions'
+apply = ["defer"]
+
+[plugins.syntax-highlight]
+github = 'zdharma/fast-syntax-highlighting'
+apply = ["defer"]
+
+[plugins.fzf-tab]
+github = 'Aloxaf/fzf-tab'
+use = ['fzf-tab.zsh']
+apply = ["defer"]
+
+[plugins.zsh-histdb]
+github = 'larkery/zsh-histdb'
+apply = ["defer"]
+
+[plugins.zsh-histdb-fzf]
+github = "m42e/zsh-histdb-fzf"
+apply = ["defer"]
+
+[plugins.fancy-ctrl-z]
+github = "mdumitru/fancy-ctrl-z"
+use = ["fancy-ctrl-z.zsh"]
+apply = ["defer"]
+
+[plugins.ohmyzsh-dotenv]
+github = "ohmyzsh/ohmyzsh"
+use = ["plugins/dotenv/dotenv.plugin.zsh"]
+apply = ["defer"]

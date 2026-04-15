@@ -71,5 +71,8 @@
   nixpkgs.hostPlatform = lib.mkDefault "x86_64-linux";
   hardware.cpu.amd.updateMicrocode = lib.mkDefault config.hardware.enableRedistributableFirmware;
   boot.swraid.enable = true;
-  boot.swraid.mdadmConf = "ARRAY /dev/md0 metadata=1.2 UUID=924dea7f:6ca4ddd4:0d30ec2e:fd8d9817";
+  boot.swraid.mdadmConf = ''
+    MAILADDR root
+    ARRAY /dev/md0 metadata=1.2 UUID=924dea7f:6ca4ddd4:0d30ec2e:fd8d9817
+  '';
 }
