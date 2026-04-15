@@ -66,6 +66,7 @@ in
 
   programs.fzf = {
     enable = true;
+    enableFishIntegration = false;
     enableZshIntegration = true;
   };
 
@@ -94,7 +95,14 @@ in
 
   programs.zoxide = {
     enable = true;
+    enableFishIntegration = false;
     enableZshIntegration = false;
+  };
+
+  programs.fish = {
+    enable = true;
+    interactiveShellInit = builtins.readFile (configDir + "/fish/config.fish");
+    plugins = import (configDir + "/fish/plugins.nix") { inherit pkgs; };
   };
 
   programs.zsh = {
