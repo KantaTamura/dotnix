@@ -22,7 +22,10 @@
       ...
     }:
     let
-      eachSystem = flake-utils.lib.eachSystem flake-utils.lib.allSystems;
+      supportedSystems = builtins.filter (
+        system: builtins.elem system nixpkgs.lib.systems.flakeExposed
+      ) flake-utils.lib.allSystems;
+      eachSystem = flake-utils.lib.eachSystem supportedSystems;
 
       mkNixosSystem = import ./lib/mkNixosSystem.nix {
         inherit
@@ -66,16 +69,15 @@
       in
       {
         formatter = pkgs.nixfmt-tree;
-
-        packages = pkgs.lib.optionalAttrs pkgs.stdenv.hostPlatform.isLinux {
-          home-manager-vm =
-            (mkHomeTestVm {
-              inherit system;
-              hostName = "home-manager-vm";
-              userName = "kanta";
-              homeDirectory = "/home/kanta";
-            }).config.system.build.vm;
-        };
+      }
+      // pkgs.lib.optionalAttrs pkgs.stdenv.hostPlatform.isLinux {
+        packages.home-manager-vm =
+          (mkHomeTestVm {
+            inherit system;
+            hostName = "home-manager-vm";
+            userName = "kanta";
+            homeDirectory = "/home/kanta";
+          }).config.system.build.vm;
       }
     )
     // {
