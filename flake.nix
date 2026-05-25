@@ -21,13 +21,28 @@
     }:
     let
       mkNixosSystem = import ./lib/mkNixosSystem.nix {
-        inherit inputs self nixpkgs home-manager;
+        inherit
+          inputs
+          self
+          nixpkgs
+          home-manager
+          ;
       };
       mkDarwinSystem = import ./lib/mkDarwinSystem.nix {
-        inherit inputs self nixpkgs nix-darwin;
+        inherit
+          inputs
+          self
+          nixpkgs
+          nix-darwin
+          ;
       };
       mkHome = import ./lib/mkHome.nix {
-        inherit inputs self nixpkgs home-manager;
+        inherit
+          inputs
+          self
+          nixpkgs
+          home-manager
+          ;
       };
       mkHomeTestVm = import ./lib/mkHomeTestVm.nix {
         inherit inputs self nixpkgs home-manager;
