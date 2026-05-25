@@ -1,6 +1,7 @@
 {
   inputs = {
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
+    flake-utils.url = "github:numtide/flake-utils";
     home-manager = {
       url = "github:nix-community/home-manager";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -15,11 +16,14 @@
     inputs@{
       self,
       nixpkgs,
+      flake-utils,
       home-manager,
       nix-darwin,
       ...
     }:
     let
+      eachSystem = flake-utils.lib.eachSystem flake-utils.lib.allSystems;
+
       mkNixosSystem = import ./lib/mkNixosSystem.nix {
         inherit
           inputs
@@ -44,22 +48,37 @@
           home-manager
           ;
       };
-      mkHomeTestVm = import ./lib/mkHomeTestVm.nix {
-        inherit inputs self nixpkgs home-manager;
-      };
-      homeManagerVm = mkHomeTestVm {
-        system = "x86_64-linux";
-        hostName = "home-manager-vm";
-        userName = "kanta";
-        homeDirectory = "/home/kanta";
-      };
     in
-    {
-      formatter.x86_64-linux =
-        (import nixpkgs {
-          system = "x86_64-linux";
-        }).nixfmt-tree;
+    eachSystem (
+      system:
+      let
+        pkgs = import nixpkgs {
+          inherit system;
+        };
+        mkHomeTestVm = import ./lib/mkHomeTestVm.nix {
+          inherit
+            inputs
+            self
+            nixpkgs
+            home-manager
+            ;
+        };
+      in
+      {
+        formatter = pkgs.nixfmt-tree;
 
+        packages = pkgs.lib.optionalAttrs pkgs.stdenv.hostPlatform.isLinux {
+          home-manager-vm =
+            (mkHomeTestVm {
+              inherit system;
+              hostName = "home-manager-vm";
+              userName = "kanta";
+              homeDirectory = "/home/kanta";
+            }).config.system.build.vm;
+        };
+      }
+    )
+    // {
       nixosConfigurations = {
         ms-a2 = mkNixosSystem {
           system = "x86_64-linux";
@@ -67,7 +86,6 @@
           userName = "kanta";
           homeDirectory = "/home/kanta";
         };
-        home-manager-vm = homeManagerVm;
       };
 
       darwinConfigurations = { };
@@ -82,7 +100,5 @@
           ];
         };
       };
-
-      packages.x86_64-linux.home-manager-vm = homeManagerVm.config.system.build.vm;
     };
 }

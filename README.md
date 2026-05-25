@@ -76,7 +76,7 @@ nix build github:KantaTamura/dotnix#homeConfigurations.kanta.activationPackage
 Build a disposable NixOS VM that applies the current `home-manager` config for `kanta`:
 
 ```bash
-nix build github:KantaTamura/dotnix#packages.x86_64-linux.home-manager-vm
+nix build github:KantaTamura/dotnix#home-manager-vm
 ./result/bin/run-home-manager-vm-vm
 ```
 
