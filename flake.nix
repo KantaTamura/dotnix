@@ -29,6 +29,15 @@
       mkHome = import ./lib/mkHome.nix {
         inherit inputs self nixpkgs home-manager;
       };
+      mkHomeTestVm = import ./lib/mkHomeTestVm.nix {
+        inherit inputs self nixpkgs home-manager;
+      };
+      homeManagerVm = mkHomeTestVm {
+        system = "x86_64-linux";
+        hostName = "home-manager-vm";
+        userName = "kanta";
+        homeDirectory = "/home/kanta";
+      };
     in
     {
       nixosConfigurations = {
@@ -38,6 +47,7 @@
           userName = "kanta";
           homeDirectory = "/home/kanta";
         };
+        home-manager-vm = homeManagerVm;
       };
 
       darwinConfigurations = { };
@@ -52,5 +62,7 @@
           ];
         };
       };
+
+      packages.x86_64-linux.home-manager-vm = homeManagerVm.config.system.build.vm;
     };
 }
