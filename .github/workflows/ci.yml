@@ -1,0 +1,43 @@
+name: CI
+
+on:
+  pull_request:
+  push:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ci-${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  flake-checks:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v5
+
+      - name: Install Nix
+        uses: cachix/install-nix-action@v31
+        with:
+          github_access_token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Show flake outputs
+        run: nix flake show
+
+      - name: Check formatting
+        run: |
+          nix fmt
+          git diff --exit-code
+
+      - name: Build Home Manager activation package
+        run: nix build .#homeConfigurations.kanta.activationPackage --print-build-logs
+
+      - name: Build Home Manager VM
+        run: nix build .#home-manager-vm --print-build-logs
+
+      - name: Build NixOS system
+        run: nix build .#nixosConfigurations.ms-a2.config.system.build.toplevel --print-build-logs
