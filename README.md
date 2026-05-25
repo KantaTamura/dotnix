@@ -73,6 +73,25 @@ Check the Home Manager activation package:
 nix build github:KantaTamura/dotnix#homeConfigurations.kanta.activationPackage
 ```
 
+Build a disposable NixOS VM that applies the current `home-manager` config for `kanta`:
+
+```bash
+nix build github:KantaTamura/dotnix#packages.x86_64-linux.home-manager-vm
+./result/bin/run-home-manager-vm-vm
+```
+
+The VM skips host-specific NixOS hardware settings and is intended only for checking the Home Manager environment. It autologins as `kanta`, and SSH is exposed on host port `2222`.
+
+You can also log in over SSH:
+
+```bash
+ssh kanta@localhost -p 2222
+```
+
+The initial password for `kanta` is `nixos`.
+
+To leave the VM cleanly, run `poweroff` inside the guest. To quit QEMU directly from the console, use `Ctrl-a x`.
+
 Check available flake outputs:
 
 ```bash
