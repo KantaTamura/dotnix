@@ -31,6 +31,11 @@
       };
     in
     {
+      formatter.x86_64-linux =
+        (import nixpkgs {
+          system = "x86_64-linux";
+        }).nixfmt-tree;
+
       nixosConfigurations = {
         ms-a2 = mkNixosSystem {
           system = "x86_64-linux";
