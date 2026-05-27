@@ -42,10 +42,6 @@ in
     ];
 
     brews = [
-      {
-        name = "FelixKratz/formulae/sketchybar";
-        start_service = true;
-      }
       "koekeishiya/formulae/skhd"
     ];
 
