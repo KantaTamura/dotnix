@@ -74,6 +74,16 @@ in
   '';
 
   system.defaults = {
+    CustomUserPreferences = {
+      "com.pilotmoon.scroll-reverser" = {
+        InvertScrollingOn = true;
+        ReverseMouse = true;
+        ReverseTrackpad = false;
+        ReverseX = false;
+        ReverseY = true;
+      };
+    };
+
     NSGlobalDomain = {
       # Full keyboard access makes dialogs easier to operate without the mouse.
       AppleKeyboardUIMode = 3;
