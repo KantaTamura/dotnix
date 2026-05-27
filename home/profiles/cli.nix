@@ -8,6 +8,7 @@
 let
   configDir = self + /config;
   recursiveConfigDirs = [
+    "lazygit"
     "nvim"
     "wezterm"
     "zsh"
@@ -48,6 +49,7 @@ in
     gettext
     gnumake
     ninja
+    osc
     pkg-config
     ripgrep
     sheldon
