@@ -61,6 +61,16 @@ if command -v zoxide &> /dev/null; then
     unset zoxide_cache
 fi
 
+# make & use direnv script cache
+if command -v direnv &> /dev/null; then
+    direnv_cache="$XDG_CONFIG_HOME/zsh/direnv.zsh"
+    if [[ ! -r "$direnv_cache" ]]; then
+        direnv hook zsh > $direnv_cache
+    fi
+    source "$direnv_cache"
+    unset direnv_cache
+fi
+
 # history per directory
 source $XDG_CONFIG_HOME/zsh/cwd_history.zsh
 
