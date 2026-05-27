@@ -39,6 +39,7 @@
     ];
 
     casks = [
+      "1password"
       "aerospace"
       "alt-tab"
       "raycast"
