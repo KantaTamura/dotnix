@@ -1,5 +1,5 @@
 # history
-export HISTFILE=${XDG_STATE_HOME:-$HOME/.local/state}/zsh/history
+export HISTFILE=$XDG_CONFIG_HOME/zsh/history
 export HISTSIZE=100000
 export SAVEHIST=100000
 setopt extended_history
