@@ -88,7 +88,15 @@ This installs the basic macOS development toolchain such as `git`, `clang`, `mak
 bash <(curl -L https://nixos.org/nix/install) --daemon
 ```
 
-3. Apply the Darwin configuration for the first time:
+3. Install Homebrew if it is not installed yet:
+
+```bash
+/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+```
+
+The nix-darwin `homebrew.enable` option manages packages through an existing `brew` installation. It does not install Homebrew itself, so this step is required before enabling Homebrew casks or formulae in the Darwin profile.
+
+4. Apply the Darwin configuration for the first time:
 
 ```bash
 sudo nix run github:nix-darwin/nix-darwin/master#darwin-rebuild -- switch --flake github:KantaTamura/dotnix#macbook

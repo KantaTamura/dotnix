@@ -24,6 +24,8 @@
 
   programs.zsh.enable = true;
 
+  homebrew.enable = true;
+
   system.activationScripts.postActivation.text = ''
     install -d -o ${userName} "${homeDirectory}/Pictures/Screenshots"
   '';
