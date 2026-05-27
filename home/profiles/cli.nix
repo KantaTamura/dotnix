@@ -47,6 +47,7 @@ in
     fastfetch
     fd
     gettext
+    gh
     gnumake
     ninja
     osc
@@ -112,8 +113,8 @@ in
       fetch.prune = true;
       pull.rebase = true;
       merge.conflictstyle = "zdiff3";
-      "credential \"https://github.com\"".helper = "!/usr/bin/gh auth git-credential";
-      "credential \"https://gist.github.com\"".helper = "!/usr/bin/gh auth git-credential";
+      "credential \"https://github.com\"".helper = "!${pkgs.gh}/bin/gh auth git-credential";
+      "credential \"https://gist.github.com\"".helper = "!${pkgs.gh}/bin/gh auth git-credential";
       credential.helper = "store";
       alias = {
         loggraph = "log --graph --color=always --date=format:'%Y-%m-%d %H:%M' --pretty=format:'%C(#a0a0a0 reverse)%h%Creset %C(cyan)%ad%Creset %C(#dd4814)%ae%Creset %C(yellow reverse)%d%Creset%n%C(white bold)%s%Creset%n";
