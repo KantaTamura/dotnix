@@ -1,5 +1,14 @@
-{ userName, homeDirectory, ... }:
 {
+  self,
+  userName,
+  homeDirectory,
+  ...
+}:
+{
+  imports = [
+    (self + /modules/common/fonts.nix)
+  ];
+
   users.users."${userName}".home = homeDirectory;
   system.primaryUser = userName;
 

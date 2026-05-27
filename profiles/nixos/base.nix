@@ -2,6 +2,7 @@
 {
   imports = [
     (self + /modules/common/core.nix)
+    (self + /modules/common/fonts.nix)
     (self + /modules/common/nix.nix)
     (self + /modules/common/shell/zsh.nix)
     (self + /modules/nixos/boot/efi-systemd-boot.nix)
