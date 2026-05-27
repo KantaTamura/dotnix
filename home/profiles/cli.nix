@@ -112,6 +112,9 @@ in
     initContent = lib.mkMerge [
       (lib.mkBefore ''
         mkdir -p ${config.xdg.stateHome}/zsh
+        ${lib.optionalString pkgs.stdenv.hostPlatform.isDarwin ''
+          HISTDB_TABULATE_CMD=(sed -e $'s/\x1f/\t/g')
+        ''}
         eval "$(sheldon source)"
       '')
       ''
