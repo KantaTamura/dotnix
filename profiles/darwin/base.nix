@@ -52,6 +52,10 @@ in
       "raycast"
       "scroll-reverser"
     ];
+
+    masApps = {
+      "1Password for Safari" = 1569813296;
+    };
   };
 
   launchd.user.agents = {
