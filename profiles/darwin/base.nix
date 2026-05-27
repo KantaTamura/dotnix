@@ -4,6 +4,14 @@
   homeDirectory,
   ...
 }:
+let
+  mkLoginApp = appName: {
+    script = ''
+      /usr/bin/open -gja "${appName}"
+    '';
+    serviceConfig.RunAtLoad = true;
+  };
+in
 {
   imports = [
     (self + /modules/common/fonts.nix)
@@ -34,8 +42,14 @@
     ];
 
     brews = [
-      "sketchybar"
-      "skhd"
+      {
+        name = "sketchybar";
+        start_service = true;
+      }
+      {
+        name = "skhd";
+        start_service = true;
+      }
     ];
 
     casks = [
@@ -45,6 +59,14 @@
       "raycast"
       "scroll-reverser"
     ];
+  };
+
+  launchd.user.agents = {
+    "1password" = mkLoginApp "1Password";
+    aerospace = mkLoginApp "AeroSpace";
+    alt-tab = mkLoginApp "AltTab";
+    raycast = mkLoginApp "Raycast";
+    scroll-reverser = mkLoginApp "Scroll Reverser";
   };
 
   system.activationScripts.postActivation.text = ''
