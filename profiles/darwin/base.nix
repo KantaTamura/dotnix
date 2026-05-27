@@ -24,7 +24,27 @@
 
   programs.zsh.enable = true;
 
-  homebrew.enable = true;
+  homebrew = {
+    enable = true;
+
+    taps = [
+      "FelixKratz/formulae"
+      "koekeishiya/formulae"
+      "nikitabobko/tap"
+    ];
+
+    brews = [
+      "sketchybar"
+      "skhd"
+    ];
+
+    casks = [
+      "aerospace"
+      "alt-tab"
+      "raycast"
+      "scroll-reverser"
+    ];
+  };
 
   system.activationScripts.postActivation.text = ''
     install -d -o ${userName} "${homeDirectory}/Pictures/Screenshots"
