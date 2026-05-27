@@ -43,13 +43,10 @@ in
 
     brews = [
       {
-        name = "sketchybar";
+        name = "FelixKratz/formulae/sketchybar";
         start_service = true;
       }
-      {
-        name = "skhd";
-        start_service = true;
-      }
+      "koekeishiya/formulae/skhd"
     ];
 
     casks = [
