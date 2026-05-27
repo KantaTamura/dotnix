@@ -41,3 +41,18 @@ jobs:
 
       - name: Build NixOS system
         run: nix build .#nixosConfigurations.ms-a2.config.system.build.toplevel --print-build-logs
+
+  darwin-build:
+    runs-on: macos-15
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v6
+
+      - name: Install Nix
+        uses: cachix/install-nix-action@v31
+        with:
+          github_access_token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Build nix-darwin system
+        run: nix build .#darwinConfigurations.macbook.system --print-build-logs

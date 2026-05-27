@@ -42,6 +42,7 @@
           self
           nixpkgs
           nix-darwin
+          home-manager
           ;
       };
       mkHome = import ./lib/mkHome.nix {
@@ -91,7 +92,14 @@
         };
       };
 
-      darwinConfigurations = { };
+      darwinConfigurations = {
+        macbook = mkDarwinSystem {
+          system = "aarch64-darwin";
+          hostName = "macbook";
+          userName = "kanta";
+          homeDirectory = "/Users/kanta";
+        };
+      };
 
       homeConfigurations = {
         kanta = mkHome {
