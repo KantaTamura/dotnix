@@ -22,9 +22,10 @@
       ...
     }:
     let
-      supportedSystems = builtins.filter (
-        system: builtins.elem system nixpkgs.lib.systems.flakeExposed
-      ) flake-utils.lib.allSystems;
+      supportedSystems = [
+        "x86_64-linux"
+        "aarch64-darwin"
+      ];
       eachSystem = flake-utils.lib.eachSystem supportedSystems;
 
       mkNixosSystem = import ./lib/mkNixosSystem.nix {
