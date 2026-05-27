@@ -9,6 +9,7 @@ let
   configDir = self + /config;
   recursiveConfigDirs = [
     "nvim"
+    "wezterm"
     "zsh"
   ];
   configFiles = [
@@ -53,6 +54,7 @@ in
     starship
     tree-sitter
     unzip
+    wezterm
   ];
 
   programs.bat.enable = true;
