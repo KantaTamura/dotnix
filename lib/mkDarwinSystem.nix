@@ -50,6 +50,7 @@ nix-darwin.lib.darwinSystem {
       };
       home-manager.users."${userName}" = {
         imports = [
+          (self + /home/profiles/darwin.nix)
           (self + /home/users/${userName})
         ]
         ++ extraHomeModules;
