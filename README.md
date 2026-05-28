@@ -67,6 +67,13 @@ The following still need to be handled outside Home Manager:
 
 - changing the login shell with `chsh`
 - OS locale generation and other root-owned system settings
+- installing and selecting a Rust toolchain with `rustup`
+
+`rustup` itself is installed by Home Manager, but Rust toolchains are intentionally not installed during Home Manager activation because that would perform network access outside Nix's store-managed build model. After applying the Home Manager or nix-darwin configuration, install the stable toolchain manually when needed:
+
+```bash
+rustup default stable
+```
 
 ### nix-darwin
 
