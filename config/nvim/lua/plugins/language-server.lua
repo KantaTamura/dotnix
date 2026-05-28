@@ -25,7 +25,6 @@ return {
 						"ruff",
 						"clangd",
 						"texlab",
-						"nil_ls",
 						"biome",
 						"gh_actions_ls",
 					},
@@ -127,14 +126,17 @@ return {
 					},
 				},
 				texlab = {},
-				nil_ls = {
+				nixd = {
 					settings = {
-						['nil'] = {
+						nixd = {
 							formatting = {
 								command = { "nixfmt" },
 							},
+							nixpkgs = {
+								expr = "import <nixpkgs> { }",
+							},
 						},
-					}
+					},
 				},
 				biome = {},
 			}
