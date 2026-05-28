@@ -58,6 +58,7 @@ in
     starship
     tree-sitter
     unzip
+    wget
     wezterm
   ];
 
