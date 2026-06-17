@@ -56,6 +56,7 @@ in
       "google-chrome"
       "raycast"
       "scroll-reverser"
+      "tailscale-app"
     ];
 
     masApps = {
