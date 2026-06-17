@@ -143,6 +143,37 @@ in
 
   programs.lazygit.enable = true;
 
+  programs.ssh = {
+    enable = true;
+    enableDefaultConfig = false;
+    includes = [
+      "~/.ssh/config.local"
+    ];
+    settings."*" = {
+      ServerAliveInterval = 60;
+      TCPKeepAlive = true;
+      ForwardAgent = true;
+      SetEnv.TERM = "xterm-256color";
+      IdentityFile = "~/.ssh/1password.pub";
+    };
+    extraConfig = ''
+      Match exec "test -z $SSH_CONNECTION"
+          IdentityAgent ${
+            if pkgs.stdenv.hostPlatform.isDarwin then
+              "\"~/Library/Group Containers/2BUA8C4S2C.com.1password/t/agent.sock\""
+            else
+              "~/.1password/agent.sock"
+          }
+    '';
+  };
+
+  home.activation.ensureSshConfigLocal = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
+    install -d -m 700 "${config.home.homeDirectory}/.ssh"
+    if [ ! -e "${config.home.homeDirectory}/.ssh/config.local" ] && [ ! -L "${config.home.homeDirectory}/.ssh/config.local" ]; then
+      install -m 600 /dev/null "${config.home.homeDirectory}/.ssh/config.local"
+    fi
+  '';
+
   programs.neovim = {
     enable = true;
     defaultEditor = true;
