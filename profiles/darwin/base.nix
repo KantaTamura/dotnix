@@ -43,6 +43,10 @@ in
 
     brews = [
       "koekeishiya/formulae/skhd"
+      {
+        name = "ollama";
+        start_service = true;
+      }
     ];
 
     casks = [
