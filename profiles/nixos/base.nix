@@ -10,6 +10,7 @@
     (self + /modules/nixos/services/docker.nix)
     (self + /modules/nixos/services/openssh-hardening.nix)
     (self + /modules/nixos/services/tailscale.nix)
+    (self + /modules/nixos/system/tempfiles.nix)
     (self + /modules/nixos/system/zram.nix)
   ];
 }
