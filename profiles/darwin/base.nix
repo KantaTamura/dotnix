@@ -53,6 +53,7 @@ in
       "1password"
       "aerospace"
       "alt-tab"
+      "google-chrome"
       "raycast"
       "scroll-reverser"
     ];
