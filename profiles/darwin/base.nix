@@ -53,9 +53,11 @@ in
       "1password"
       "aerospace"
       "alt-tab"
+      "discord"
       "google-chrome"
       "raycast"
       "scroll-reverser"
+      "slack"
       "tailscale-app"
     ];
 
