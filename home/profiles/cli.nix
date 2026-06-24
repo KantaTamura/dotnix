@@ -7,6 +7,7 @@
 }:
 let
   configDir = self + /config;
+  skillDir = self + /skills;
   recursiveConfigDirs = [
     "lazygit"
     "nvim"
@@ -35,6 +36,11 @@ in
   xdg.configFile =
     builtins.listToAttrs (map mkRecursiveConfigEntry recursiveConfigDirs)
     // builtins.listToAttrs (map mkConfigFileEntry configFiles);
+
+  home.file.".agents/skills/commit-rule" = {
+    source = skillDir + "/commit-rule";
+    recursive = true;
+  };
 
   home.sessionVariables = {
     EDITOR = "nvim";
