@@ -15,6 +15,7 @@ in
 {
   imports = [
     (self + /modules/common/fonts.nix)
+    (self + /modules/common/nix.nix)
   ];
 
   users.users."${userName}".home = homeDirectory;
