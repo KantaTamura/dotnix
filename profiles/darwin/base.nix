@@ -59,6 +59,7 @@ in
       "raycast"
       "scroll-reverser"
       "slack"
+      "steam"
       "tailscale-app"
     ];
 
