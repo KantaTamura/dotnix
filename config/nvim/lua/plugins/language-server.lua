@@ -27,6 +27,7 @@ return {
 						"texlab",
 						"biome",
 						"gh_actions_ls",
+						"ts_ls",
 					},
 				},
 			},
@@ -139,6 +140,7 @@ return {
 					},
 				},
 				biome = {},
+				ts_ls = {},
 			}
 
 			for name, opts in pairs(servers) do
