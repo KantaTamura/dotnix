@@ -48,6 +48,7 @@ in
   };
 
   home.packages = with pkgs; [
+    awscli2
     btop
     codex
     curl
