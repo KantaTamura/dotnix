@@ -128,6 +128,40 @@ The Darwin profile includes a few opinionated defaults in [`profiles/darwin/base
 - tap-to-click and three-finger drag
 - screenshot output under `~/Pictures/Screenshots`
 
+## Update Packages
+
+Package versions are pinned by [`flake.lock`](/flake.lock). To update the pinned
+Nix inputs, run the update from a local clone:
+
+```bash
+nix flake update
+```
+
+To update only one input, name it explicitly:
+
+```bash
+nix flake update nixpkgs
+```
+
+Check the updated flake before applying it:
+
+```bash
+nix flake show .
+nix build .#homeConfigurations.kanta.activationPackage
+```
+
+Then apply the updated configuration for the target environment:
+
+```bash
+sudo nixos-rebuild switch --flake .#ms-a2
+home-manager switch --flake .#kanta
+sudo darwin-rebuild switch --flake .#macbook
+```
+
+On macOS, Homebrew itself is still installed outside Nix. The Brew formulae,
+casks, and App Store apps listed in the Darwin profile are reconciled when the
+Darwin configuration is applied.
+
 ## Verify
 
 You can verify that the flake evaluates and builds the expected outputs without switching immediately.
