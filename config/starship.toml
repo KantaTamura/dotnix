@@ -94,6 +94,8 @@ min_time = 0
 
 [nix_shell]
 style  = "bold green"
+symbol = " "
+format = "[](fg:base bg:none)[$symbol](fg:$style bg:base)[](fg:base bg:none) "
 
 [c]
 style  = "bold green"
