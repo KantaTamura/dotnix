@@ -118,6 +118,8 @@ in
       autohide-delay = 0.0;
       # Avoid macOS reshuffling Spaces based on recent use.
       mru-spaces = false;
+      # Work around tiny Mission Control previews when using AeroSpace.
+      expose-group-apps = true;
       # Minimize into the app icon keeps the Dock tidier.
       minimize-to-application = true;
       showhidden = true;
