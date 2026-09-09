@@ -10,9 +10,9 @@ gui:
   nerdFontsVersion: 3
 git:
   overrideGpg: true
-  pagers:
+  diffRenderers:
     - colorArg: always
-      pager: delta --dark --paging=never
+      command: delta --dark --paging=never
   commit:
     signOff: true
   log:
