@@ -105,6 +105,8 @@ in
       NSAutomaticPeriodSubstitutionEnabled = false;
       NSAutomaticQuoteSubstitutionEnabled = false;
       NSAutomaticSpellingCorrectionEnabled = false;
+      # Autohide the menu bar to maximize usable screen space.
+      _HIHideMenuBar = true;
       # Save dialogs are more usable when expanded by default.
       NSNavPanelExpandedStateForSaveMode = true;
       NSNavPanelExpandedStateForSaveMode2 = true;
