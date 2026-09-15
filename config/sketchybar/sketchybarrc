@@ -1,0 +1,15 @@
+#!/etc/profiles/per-user/kanta/bin/lua
+
+local config_dir = os.getenv("CONFIG_DIR") or os.getenv("HOME") .. "/.config/sketchybar"
+
+package.path = config_dir .. "/?.lua;" .. config_dir .. "/?/init.lua;" .. package.path
+
+sbar = require("sketchybar")
+
+sbar.begin_config()
+require("init")
+sbar.end_config()
+
+sbar.hotload(true)
+sbar.trigger("forced")
+sbar.event_loop()

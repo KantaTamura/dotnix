@@ -44,6 +44,7 @@ in
 
     brews = [
       "koekeishiya/formulae/skhd"
+      "sketchybar"
       {
         name = "ollama";
         start_service = true;
