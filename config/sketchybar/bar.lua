@@ -3,6 +3,7 @@ local settings = require("settings")
 
 sbar.bar({
   position = "top",
+  topmost = "window",
   height = settings.height,
   margin = 8,
   y_offset = 6,

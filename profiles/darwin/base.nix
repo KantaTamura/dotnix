@@ -38,13 +38,29 @@ in
 
     taps = [
       "FelixKratz/formulae"
+      "crissnb/dynamicisland"
       "koekeishiya/formulae"
+      "malpern/tap"
       "nikitabobko/tap"
     ];
 
     brews = [
-      "koekeishiya/formulae/skhd"
-      "sketchybar"
+      {
+        name = "crissnb/dynamicisland/dynamicislandsketchybar";
+        trusted = true;
+      }
+      {
+        name = "koekeishiya/formulae/skhd";
+        trusted = true;
+      }
+      {
+        name = "felixkratz/formulae/sketchybar";
+        trusted = true;
+      }
+      {
+        name = "malpern/tap/sketchybar-toggle";
+        trusted = true;
+      }
       {
         name = "ollama";
         start_service = true;
@@ -60,6 +76,7 @@ in
       "raycast"
       "scroll-reverser"
       "slack"
+      "sf-symbols"
       "steam"
       "tailscale-app"
     ];
@@ -73,8 +90,27 @@ in
     "1password" = mkLoginApp "1Password";
     aerospace = mkLoginApp "AeroSpace";
     alt-tab = mkLoginApp "AltTab";
+    dynamic-island.serviceConfig = {
+      ProgramArguments = [ "/opt/homebrew/bin/dynamic-island" ];
+      EnvironmentVariables.PATH = "/opt/homebrew/bin:/usr/bin:/bin:/usr/sbin:/sbin";
+      RunAtLoad = true;
+      KeepAlive.SuccessfulExit = false;
+      ThrottleInterval = 5;
+      WorkingDirectory = "/tmp";
+      StandardOutPath = "/tmp/dynamic-island.log";
+      StandardErrorPath = "/tmp/dynamic-island.log";
+    };
     raycast = mkLoginApp "Raycast";
     scroll-reverser = mkLoginApp "Scroll Reverser";
+    sketchybar-toggle.serviceConfig = {
+      ProgramArguments = [ "/opt/homebrew/bin/sketchybar-toggle" ];
+      RunAtLoad = true;
+      KeepAlive.SuccessfulExit = false;
+      ThrottleInterval = 5;
+      WorkingDirectory = "/tmp";
+      StandardOutPath = "/tmp/sketchybar-toggle.log";
+      StandardErrorPath = "/tmp/sketchybar-toggle.log";
+    };
   };
 
   system.activationScripts.postActivation.text = ''
