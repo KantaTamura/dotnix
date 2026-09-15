@@ -15,7 +15,7 @@ local clock = sbar.add("item", "clock", {
     align = "right",
   },
   background = { drawing = false },
-  update_freq = 30,
+  update_freq = 10,
   click_script = [[open -a Calendar]],
 })
 
