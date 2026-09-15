@@ -58,6 +58,7 @@ in
     gh
     gnumake
     ninja
+    opencode
     osc
     pkg-config
     ripgrep

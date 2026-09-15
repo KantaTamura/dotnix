@@ -103,7 +103,17 @@ bash <(curl -L https://nixos.org/nix/install) --daemon
 
 The nix-darwin `homebrew.enable` option manages packages through an existing `brew` installation. It does not install Homebrew itself, so this step is required before enabling Homebrew casks or formulae in the Darwin profile.
 
-4. Apply the Darwin configuration for the first time:
+4. Trust the third-party formulae managed by the Darwin profile:
+
+```bash
+env -u XDG_CONFIG_HOME brew trust --formula \
+  felixkratz/formulae/sketchybar \
+  koekeishiya/formulae/skhd
+```
+
+Recent Homebrew releases require explicit trust before loading formulae from non-official taps. The `env -u XDG_CONFIG_HOME` prefix stores this trust in `~/.homebrew/trust.json`, which is also the location used when nix-darwin runs Homebrew. Without it, an interactive shell may instead write to `$XDG_CONFIG_HOME/homebrew/trust.json`, and `darwin-rebuild` will not see the trust entries.
+
+5. Apply the Darwin configuration for the first time:
 
 ```bash
 sudo nix run github:nix-darwin/nix-darwin/master#darwin-rebuild -- switch --flake github:KantaTamura/dotnix#macbook
