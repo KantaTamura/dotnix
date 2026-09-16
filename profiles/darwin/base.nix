@@ -68,6 +68,7 @@ in
       "alt-tab"
       "discord"
       "google-chrome"
+      "karabiner-elements"
       "raycast"
       "scroll-reverser"
       "slack"

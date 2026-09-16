@@ -1,0 +1,158 @@
+{
+  "profiles": [
+    {
+      "name": "Default",
+      "selected": true,
+      "simple_modifications": [
+        {
+          "from": { "key_code": "left_command" },
+          "to": [{ "key_code": "left_option" }]
+        },
+        {
+          "from": { "key_code": "left_option" },
+          "to": [{ "key_code": "left_command" }]
+        },
+        {
+          "from": { "key_code": "right_command" },
+          "to": [{ "key_code": "right_option" }]
+        },
+        {
+          "from": { "key_code": "right_option" },
+          "to": [{ "key_code": "right_command" }]
+        }
+      ],
+      "complex_modifications": {
+        "rules": [
+          {
+            "description": "Use Control-C and Control-V for copy and paste outside terminals",
+            "manipulators": [
+              {
+                "type": "basic",
+                "from": {
+                  "key_code": "c",
+                  "modifiers": {
+                    "mandatory": ["control"],
+                    "optional": ["caps_lock"]
+                  }
+                },
+                "to": [
+                  {
+                    "key_code": "c",
+                    "modifiers": ["left_command"]
+                  }
+                ],
+                "conditions": [
+                  {
+                    "type": "frontmost_application_unless",
+                    "bundle_identifiers": [
+                      "^com\\.apple\\.Terminal$",
+                      "^com\\.github\\.wez\\.wezterm$",
+                      "^com\\.googlecode\\.iterm2$",
+                      "^com\\.mitchellh\\.ghostty$",
+                      "^dev\\.warp\\.Warp-Stable$",
+                      "^net\\.kovidgoyal\\.kitty$",
+                      "^org\\.alacritty$"
+                    ]
+                  }
+                ]
+              },
+              {
+                "type": "basic",
+                "from": {
+                  "key_code": "v",
+                  "modifiers": {
+                    "mandatory": ["control"],
+                    "optional": ["caps_lock"]
+                  }
+                },
+                "to": [
+                  {
+                    "key_code": "v",
+                    "modifiers": ["left_command"]
+                  }
+                ],
+                "conditions": [
+                  {
+                    "type": "frontmost_application_unless",
+                    "bundle_identifiers": [
+                      "^com\\.apple\\.Terminal$",
+                      "^com\\.github\\.wez\\.wezterm$",
+                      "^com\\.googlecode\\.iterm2$",
+                      "^com\\.mitchellh\\.ghostty$",
+                      "^dev\\.warp\\.Warp-Stable$",
+                      "^net\\.kovidgoyal\\.kitty$",
+                      "^org\\.alacritty$"
+                    ]
+                  }
+                ]
+              },
+              {
+                "type": "basic",
+                "from": {
+                  "key_code": "c",
+                  "modifiers": {
+                    "mandatory": ["control", "shift"],
+                    "optional": ["caps_lock"]
+                  }
+                },
+                "to": [
+                  {
+                    "key_code": "c",
+                    "modifiers": ["left_command"]
+                  }
+                ],
+                "conditions": [
+                  {
+                    "type": "frontmost_application_unless",
+                    "bundle_identifiers": [
+                      "^com\\.apple\\.Terminal$",
+                      "^com\\.github\\.wez\\.wezterm$",
+                      "^com\\.googlecode\\.iterm2$",
+                      "^com\\.mitchellh\\.ghostty$",
+                      "^dev\\.warp\\.Warp-Stable$",
+                      "^net\\.kovidgoyal\\.kitty$",
+                      "^org\\.alacritty$"
+                    ]
+                  }
+                ]
+              },
+              {
+                "type": "basic",
+                "from": {
+                  "key_code": "v",
+                  "modifiers": {
+                    "mandatory": ["control", "shift"],
+                    "optional": ["caps_lock"]
+                  }
+                },
+                "to": [
+                  {
+                    "key_code": "v",
+                    "modifiers": ["left_command"]
+                  }
+                ],
+                "conditions": [
+                  {
+                    "type": "frontmost_application_unless",
+                    "bundle_identifiers": [
+                      "^com\\.apple\\.Terminal$",
+                      "^com\\.github\\.wez\\.wezterm$",
+                      "^com\\.googlecode\\.iterm2$",
+                      "^com\\.mitchellh\\.ghostty$",
+                      "^dev\\.warp\\.Warp-Stable$",
+                      "^net\\.kovidgoyal\\.kitty$",
+                      "^org\\.alacritty$"
+                    ]
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      "virtual_hid_keyboard": {
+        "keyboard_type": "ansi"
+      }
+    }
+  ]
+}

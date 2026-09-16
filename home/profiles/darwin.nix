@@ -15,4 +15,7 @@ in
     source = configDir + "/sketchybar";
     recursive = true;
   };
+
+  xdg.configFile."karabiner/karabiner.json".source =
+    configDir + "/karabiner/karabiner.json";
 }
