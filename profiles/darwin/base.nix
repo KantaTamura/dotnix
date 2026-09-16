@@ -92,7 +92,10 @@ in
     alt-tab = mkLoginApp "AltTab";
     dynamic-island.serviceConfig = {
       ProgramArguments = [ "/opt/homebrew/bin/dynamic-island" ];
-      EnvironmentVariables.PATH = "/opt/homebrew/bin:/usr/bin:/bin:/usr/sbin:/sbin";
+      EnvironmentVariables = {
+        HOME = homeDirectory;
+        PATH = "/opt/homebrew/bin:/usr/bin:/bin:/usr/sbin:/sbin";
+      };
       RunAtLoad = true;
       KeepAlive.SuccessfulExit = false;
       ThrottleInterval = 5;
