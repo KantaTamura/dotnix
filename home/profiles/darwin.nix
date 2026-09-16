@@ -15,7 +15,4 @@ in
     source = configDir + "/sketchybar";
     recursive = true;
   };
-
-  xdg.configFile."dynamic-island-sketchybar/userconfig.sh".source =
-    configDir + "/dynamic-island-sketchybar/userconfig.sh";
 }
