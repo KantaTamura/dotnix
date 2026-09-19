@@ -1,10 +1,32 @@
 local colors = require("colors")
 local settings = require("settings")
 
-local clock = sbar.add("item", "clock", {
+local date = sbar.add("item", "date", {
   position = "right",
   padding_left = 4,
   padding_right = 10,
+  icon = {
+    string = "󰃭",
+    color = colors.clock,
+    padding_right = 7,
+  },
+  label = {
+    width = 68,
+    align = "right",
+  },
+  background = { drawing = false },
+  update_freq = 60,
+  click_script = [[open -a Calendar]],
+})
+
+date:subscribe({ "routine", "forced", "system_woke" }, function()
+  date:set({ label = { string = os.date("%m/%d (%a)") } })
+end)
+
+local clock = sbar.add("item", "clock", {
+  position = "right",
+  padding_left = 4,
+  padding_right = 4,
   icon = {
     string = "󰥔",
     color = colors.clock,
@@ -121,7 +143,7 @@ volume:subscribe({ "forced", "system_woke" }, function()
   sbar.exec([[/usr/bin/osascript -e 'output volume of (get volume settings)']], set_volume)
 end)
 
-sbar.add("bracket", "status", { volume.name, cpu.name, battery.name, clock.name }, {
+sbar.add("bracket", "status", { volume.name, cpu.name, battery.name, date.name, clock.name }, {
   background = {
     color = colors.surface_alt,
     height = settings.item_height,
