@@ -16,6 +16,8 @@ in
     recursive = true;
   };
 
-  xdg.configFile."karabiner/karabiner.json".source =
-    configDir + "/karabiner/karabiner.json";
+  xdg.configFile."karabiner/karabiner.json" = {
+    source = configDir + "/karabiner/karabiner.json";
+    force = true;
+  };
 }
