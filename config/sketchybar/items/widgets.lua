@@ -8,7 +8,7 @@ local date = sbar.add("item", "date", {
   icon = {
     string = "󰃭",
     color = colors.clock,
-    padding_right = 7,
+    padding_right = 12,
   },
   label = {
     width = 68,
