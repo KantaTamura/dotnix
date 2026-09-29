@@ -1,8 +1,34 @@
--- when opening a file, restore cursor location
-vim.api.nvim_create_autocmd({ "BufReadPost" }, {
-	pattern = { "*" },
-	callback = function()
-		vim.api.nvim_exec('silent! normal! g`"zv', false)
+-- Restore the last cursor position after filetype detection.
+local restore_cursor_group = vim.api.nvim_create_augroup("RestoreCursor", { clear = true })
+
+vim.api.nvim_create_autocmd("BufReadPre", {
+	group = restore_cursor_group,
+	desc = "Restore the last cursor position",
+	callback = function(args)
+		vim.api.nvim_create_autocmd("FileType", {
+			group = restore_cursor_group,
+			buffer = args.buf,
+			once = true,
+			callback = function()
+				local filetype = vim.bo[args.buf].filetype
+				local line = vim.api.nvim_buf_get_mark(args.buf, '"')[1]
+				local line_count = vim.api.nvim_buf_line_count(args.buf)
+
+				if line < 1
+					or line > line_count
+					or filetype:find("commit", 1, true)
+					or filetype == "xxd"
+					or filetype == "gitrebase"
+					or vim.wo.diff
+				then
+					return
+				end
+
+				vim.api.nvim_buf_call(args.buf, function()
+					vim.cmd.normal({ 'g`"', bang = true })
+				end)
+			end,
+		})
 	end,
 })
 -- vim.api.nvim_create_autocmd({ "BufWritePre" }, {
