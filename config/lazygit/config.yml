@@ -1,5 +1,5 @@
 os:
-  copyToClipboardCmd: 'echo -n "{{text}}" | osc copy'
+  copyToClipboardCmd: 'printf %s {{text}} | osc copy'
 gui:
   theme:
     selectedLineBgColor:
