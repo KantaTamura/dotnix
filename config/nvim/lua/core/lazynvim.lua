@@ -16,9 +16,7 @@ local lazy_opts = {
 		lazy = true,
 	},
 	checker = {
-		enabled = true,
-		notify = true,
-		frequency = 24,
+		enabled = false,
 	},
 	performance = {
 		cache = {

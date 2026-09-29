@@ -2,6 +2,9 @@ if vim.loader then
 	vim.loader.enable()
 end
 
+vim.g.mapleader = " "
+vim.g.maplocalleader = " "
+
 do
 	local ok, err = pcall(require, "core.lazynvim")
 	if not ok then

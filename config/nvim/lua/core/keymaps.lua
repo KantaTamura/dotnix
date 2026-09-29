@@ -1,7 +1,3 @@
--- set <space> as the leader key
-vim.g.mapleader = ' '
-vim.g.maplocalleader = ' '
-
 -- Modes
 --   normal_mode = "n",
 --   insert_mode = "i",

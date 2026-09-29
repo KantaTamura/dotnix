@@ -53,7 +53,9 @@ return {
 	{
 		"goolord/alpha-nvim",
 		event = "VimEnter",
-		cond = true,
+		cond = function()
+			return vim.fn.argc() == 0
+		end,
 		dependencies = {
 			"nvim-tree/nvim-web-devicons",
 		},
@@ -165,13 +167,15 @@ return {
 			"nvim-tree/nvim-web-devicons",
 			"catppuccin/nvim",
 		},
-		event = { "BufReadPre", "BufNewFile" },
+		event = { "BufReadPost", "BufNewFile" },
+		keys = {
+			{ "<Tab>",      "<cmd>BufferLineCycleNext<cr>",  desc = "Next buffer" },
+			{ "<S-Tab>",    "<cmd>BufferLineCyclePrev<cr>",  desc = "Previous buffer" },
+			{ "<leader>cr", "<cmd>BufferLineCloseRight<cr>", desc = "Close buffers to the right" },
+			{ "<leader>cl", "<cmd>BufferLineCloseLeft<cr>",  desc = "Close buffers to the left" },
+		},
 		cond = true,
 		config = function()
-			vim.keymap.set("n", "<Tab>", "<Cmd>BufferLineCycleNext<CR>", {})
-			vim.keymap.set("n", "<S-Tab>", "<Cmd>BufferLineCyclePrev<CR>", {})
-			vim.keymap.set("n", "<leader>cr", "<Cmd>BufferLineCloseRight<CR>", {})
-			vim.keymap.set("n", "<leader>cl", "<Cmd>BufferLineCloseLeft<CR>", {})
 			local bufferline = require("bufferline")
 			require("bufferline").setup {
 				highlights = require("catppuccin.special.bufferline").get_theme(),

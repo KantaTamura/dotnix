@@ -2,11 +2,20 @@ return {
 	{
 		"nvim-telescope/telescope.nvim",
 		cmd = { "Telescope" },
-		event = { "BufReadPre", "BufNewFile" },
-		-- keys = {
-		-- 	{ "<leader>m", "<cmd>Telescope marks<cr>",     desc = "search by [M]arks" },
-		-- 	{ "<leader>g", "<cmd>Telescope live_grep<cr>", desc = "search by [G]rep" },
-		-- },
+		keys = {
+			{ "<leader>d",  "<cmd>Telescope diagnostics<cr>",           desc = "Search diagnostics" },
+			{ "<leader>gf", "<cmd>Telescope git_files<cr>",             desc = "Search Git files" },
+			{ "<leader>g",  "<cmd>Telescope live_grep<cr>",             desc = "Search by grep" },
+			{ "<leader>b",  "<cmd>Telescope buffers<cr>",               desc = "Find existing buffers" },
+			{ "<leader>hp", "<cmd>Telescope help_tags<cr>",             desc = "Search help" },
+			{ "<leader>mp", "<cmd>Telescope man_pages<cr>",             desc = "Search man pages" },
+			{ "<leader>m",  "<cmd>Telescope marks<cr>",                 desc = "Search marks" },
+			{ "<leader>k",  "<cmd>Telescope keymaps<cr>",               desc = "Search keymaps" },
+			{ "<leader>gr", "<cmd>Telescope lsp_references<cr>",        desc = "LSP references" },
+			{ "<leader>hs", "<cmd>Telescope lsp_workspace_symbols<cr>", desc = "LSP workspace symbols" },
+			{ "<leader>mf", "<cmd>Telescope media_files<cr>",           desc = "Search media files" },
+			{ "<leader>p",  "<cmd>Telescope project<cr>",               desc = "Search projects" },
+		},
 		dependencies = {
 			"nvim-lua/plenary.nvim",
 			"nvim-tree/nvim-web-devicons",
@@ -86,32 +95,6 @@ return {
 			telescope.load_extension("media_files")
 			telescope.load_extension("project")
 
-			-- keymaps
-			--   See `:help telescope.builtin`
-			-- file pickers
-			vim.keymap.set("n", "<leader>d", require("telescope.builtin").find_files, { desc = "search [F]iles" })
-			vim.keymap.set("n", "<leader>gf", require("telescope.builtin").git_files, { desc = "Search [G]it [F]iles" })
-			vim.keymap.set("n", "<leader>g", require("telescope.builtin").live_grep, { desc = "search by [G]rep" })
-			-- vim pickers
-			vim.keymap.set("n", "<leader>b", require("telescope.builtin").buffers, { desc = "Find existing [B]uffers" })
-			vim.keymap.set("n", "<leader>hp", require("telescope.builtin").help_tags, { desc = "search [H]elp" })
-			vim.keymap.set("n", "<leader>mp", require("telescope.builtin").man_pages, { desc = "search [M]an [P]ages" })
-			vim.keymap.set("n", "<leader>m", require("telescope.builtin").marks, { desc = "search by [M]arks" })
-			vim.keymap.set("n", "<leader>k", require("telescope.builtin").keymaps, { desc = "search [K]eymaps" })
-			-- lsp picker
-			vim.keymap.set("n", "<leader>d", require("telescope.builtin").diagnostics,
-				{ desc = "[S]earch [D]iagnostics" })
-			vim.keymap.set("n", "<leader>gr", require("telescope.builtin").lsp_references,
-				{ desc = "LSP references" })
-			vim.keymap.set("n", "<leader>hs", require("telescope.builtin").lsp_workspace_symbols,
-				{ desc = "LSP workspace symbols" })
-			-- extensions
-			-- vim.keymap.set("n", "<leader>f", require("telescope").extensions.file_browser.file_browser,
-			-- 	{ desc = "file [F]inder" })
-			vim.keymap.set("n", "<leader>mf", require("telescope").extensions.media_files.media_files,
-				{ desc = "search [M]edia [F]iles" })
-			vim.keymap.set("n", "<leader>p", require("telescope").extensions.project.project,
-				{ desc = "search [P]roject" })
 		end,
 	},
 }

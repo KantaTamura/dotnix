@@ -2,12 +2,12 @@ return {
 	{
 		"echasnovski/mini.ai",
 		version = "*",
-		event = { "BufReadPre", "BufNewFile" },
+		event = "VeryLazy",
 	},
 	{
 		"echasnovski/mini.indentscope",
 		version = "*",
-		event = { "BufReadPre", "BufNewFile" },
+		event = { "BufReadPost", "BufNewFile" },
 		keys = {
 			{ "<leader>is", "<cmd>IndentScope<cr>", desc = "show [I]ndent [S]cope" },
 		},
@@ -18,7 +18,7 @@ return {
 	{
 		"echasnovski/mini.comment",
 		version = "*",
-		event = { "BufReadPre", "BufNewFile" },
+		event = "VeryLazy",
 		-- config = function()
 		--     require("mini.comment").setup(
 		--         {
@@ -30,7 +30,7 @@ return {
 	{
 		"echasnovski/mini.pairs",
 		version = "*",
-		event = { "BufReadPre", "BufNewFile" },
+		event = "InsertEnter",
 		config = function()
 			require('mini.pairs').setup()
 		end

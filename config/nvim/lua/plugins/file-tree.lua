@@ -1,6 +1,25 @@
 return {
 	"nvim-tree/nvim-tree.lua",
-	event = "VimEnter",
+	cmd = {
+		"NvimTreeOpen",
+		"NvimTreeClose",
+		"NvimTreeToggle",
+		"NvimTreeFocus",
+		"NvimTreeFindFile",
+		"NvimTreeFindFileToggle",
+		"NvimTreeResize",
+		"NvimTreeCollapse",
+		"NvimTreeCollapseKeepBuffers",
+		"NvimTreeRefresh",
+		"NvimTreeClipboard",
+		"NvimTreeHiTest",
+	},
+	keys = {
+		{ "<C-n>",      "<cmd>NvimTreeFindFileToggle<cr>", desc = "Toggle file explorer" },
+		{ "<leader>ef", "<cmd>NvimTreeFindFileToggle<cr>", desc = "Toggle file explorer on current file" },
+		{ "<leader>ec", "<cmd>NvimTreeCollapse<cr>",       desc = "Collapse file explorer" },
+		{ "<leader>er", "<cmd>NvimTreeRefresh<cr>",        desc = "Refresh file explorer" },
+	},
 	dependencies = {
 		"nvim-tree/nvim-web-devicons",
 	},
@@ -53,17 +72,6 @@ return {
 				ignore = false,
 			},
 		})
-
-		-- set keymaps
-		vim.keymap.set("n", "<C-n>", "<cmd>NvimTreeFindFileToggle<CR>", { desc = "Toggle file explorer" }) -- toggle file explorer
-		vim.keymap.set(
-			"n",
-			"<leader>ef",
-			"<cmd>NvimTreeFindFileToggle<CR>",
-			{ desc = "Toggle file explorer on current file" }
-		)                                                                                                   -- toggle file explorer on current file
-		vim.keymap.set("n", "<leader>ec", "<cmd>NvimTreeCollapse<CR>", { desc = "Collapse file explorer" }) -- collapse file explorer
-		vim.keymap.set("n", "<leader>er", "<cmd>NvimTreeRefresh<CR>", { desc = "Refresh file explorer" })   -- refresh file explorer
 
 		-- local api = require("nvim-tree.api")
 		--

@@ -22,13 +22,16 @@ return {
 	-- ref. https://github.com/simeji/winresizer
 	{
 		"simeji/winresizer",
-		event = { "BufReadPre", "BufNewFile" },
+		cmd = { "WinResizerStartResize", "WinResizerStartMove", "WinResizerStartFocus" },
+		keys = {
+			{ "<C-e>", "<cmd>WinResizerStartResize<cr>", desc = "Resize windows" },
+		},
 	},
 	--
 	-- ref. https://github.com/folke/trouble.nvim
 	{
 		"folke/trouble.nvim",
-		event = { "BufReadPre", "BufNewFile" },
+		cmd = { "Trouble" },
 		dependencies = { "nvim-tree/nvim-web-devicons" },
 		opts = {
 			-- your configuration comes here
@@ -40,7 +43,7 @@ return {
 	-- ref. https://github.com/folke/todo-comments.nvim
 	{
 		"folke/todo-comments.nvim",
-		event = { "BufReadPre", "BufNewFile" },
+		event = { "BufReadPost", "BufNewFile" },
 		dependencies = { "nvim-lua/plenary.nvim" },
 		opts = {
 			-- your configuration comes here
@@ -150,7 +153,20 @@ return {
 	-- ref. https://github.com/akinsho/toggleterm.nvim
 	{
 		'akinsho/toggleterm.nvim',
-		event = { "BufReadPre", "BufNewFile" },
+		cmd = {
+			"ToggleTerm",
+			"TermExec",
+			"TermNew",
+			"TermSelect",
+			"ToggleTermToggleAll",
+			"ToggleTermSendVisualLines",
+			"ToggleTermSendVisualSelection",
+			"ToggleTermSendCurrentLine",
+			"ToggleTermSetName",
+		},
+		keys = {
+			{ "<C-;>", "<cmd>ToggleTerm<cr>", desc = "Toggle terminal" },
+		},
 		opts = {
 			insert_mappings = false,
 			direction = "float",
@@ -158,8 +174,6 @@ return {
 		},
 		config = function(_, opts)
 			require("toggleterm").setup(opts)
-			-- keymaps
-			vim.keymap.set("n", "<C-;>", "<cmd>ToggleTerm<CR>", { desc = "Toggle terminal" })
 			vim.keymap.set("t", "<Esc><Esc>", "<C-\\><C-n>", { desc = "Exit terminal mode" })
 		end,
 	},
@@ -223,16 +237,18 @@ return {
 	},
 	{
 		"lambdalisue/vim-suda",
-		event = { "BufReadPre", "BufNewFile" },
+		cmd = { "SudaRead", "SudaWrite" },
 	},
 	{
 		'beeender/richclip.nvim',
-		event = { "BufReadPre", "BufNewFile" },
+		cmd = { "RichClip" },
+		keys = {
+			{ '<leader>rc', ":'<,'>RichClip copy<cr>", mode = "v", desc = "RichClip copy (HTML)" },
+		},
 		config = function()
 			require("richclip").setup({
 				set_g_clipboard = false,
 			})
-			vim.keymap.set({ 'v' }, '<Leader>rc', ":'<,'>RichClip copy<CR>", { desc = 'RichClip copy (HTML)' })
 		end,
 	},
 	{

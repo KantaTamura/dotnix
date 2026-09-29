@@ -1,7 +1,7 @@
 return {
 	{
 		"tpope/vim-fugitive",
-		event = { "BufReadPre", "BufNewFile" },
+		cmd = { "Git" },
 		keys = {
 			{ "git", mode = "c", "<cmd>Git<cr>", desc = "OpenGit" },
 		},
@@ -34,8 +34,14 @@ return {
 	{
 		"kdheepak/lazygit.nvim",
 		dependencies = { "nvim-lua/plenary.nvim" },
-		event = { "BufReadPre", "BufNewFile" },
-		cmd = { "LazyGit" },
+		cmd = {
+			"LazyGit",
+			"LazyGitLog",
+			"LazyGitCurrentFile",
+			"LazyGitFilter",
+			"LazyGitFilterCurrentFile",
+			"LazyGitConfig",
+		},
 		keys = {
 			{ "<leader>l", mode = "n", "<cmd>LazyGit<CR>", desc = "open [L]azygit" },
 		}

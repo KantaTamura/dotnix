@@ -1,68 +1,85 @@
 return {
 	{
+		"williamboman/mason.nvim",
+		cmd = {
+			"Mason",
+			"MasonInstall",
+			"MasonUninstall",
+			"MasonUninstallAll",
+			"MasonUpdate",
+			"MasonLog",
+		},
+		build = ":MasonUpdate",
+		dependencies = {
+			"williamboman/mason-lspconfig.nvim",
+			"jay-babu/mason-null-ls.nvim",
+			"nvimtools/none-ls.nvim",
+		},
+		config = function()
+			require("mason").setup()
+			require("mason-lspconfig").setup({
+				automatic_installation = true,
+				automatic_enable = false,
+				ensure_installed = {
+					"gopls",
+					"marksman",
+					"lua_ls",
+					"rust_analyzer",
+					"zls",
+					"graphql",
+					"ruff",
+					"clangd",
+					"texlab",
+					"biome",
+					"gh_actions_ls",
+					"ts_ls",
+				},
+			})
+			require("mason-null-ls").setup({
+				automatic_installation = true,
+				ensure_installed = {
+					"stylua",
+					"gofumpt",
+					"golangci_lint",
+					"clang-format",
+					"prettier",
+					"markdownlint-cli2",
+					"textlint",
+					"cspell",
+					"kdlfmt",
+				},
+				handlers = {},
+			})
+		end,
+	},
+	{
+		"nvimtools/none-ls.nvim",
+		ft = { "c", "cpp", "cs", "java", "cuda", "proto" },
+		dependencies = { "nvim-lua/plenary.nvim" },
+		config = function()
+			local null_ls = require("null-ls")
+			null_ls.setup({
+				sources = {
+					null_ls.builtins.formatting.clang_format,
+				}
+			})
+		end,
+	},
+	{
 		"neovim/nvim-lspconfig",
 		cmd = "LspInfo",
 		event = { "BufReadPre", "BufNewFile" },
 		dependencies = {
-			{ "nvim-lua/plenary.nvim" },
 			{ "hrsh7th/cmp-nvim-lsp" },
-			{
-				"williamboman/mason.nvim",
-				opts = {},
-			},
-			{
-				"williamboman/mason-lspconfig.nvim",
-				opts = {
-					automatic_installation = true,
-					automatic_enable = false,
-					ensure_installed = {
-						"gopls",
-						"marksman",
-						"lua_ls",
-						"rust_analyzer",
-						"zls",
-						"graphql",
-						"ruff",
-						"clangd",
-						"texlab",
-						"biome",
-						"gh_actions_ls",
-						"ts_ls",
-					},
-				},
-			},
-			-- for linters and formatters
-			{
-				"nvimtools/none-ls.nvim",
-				config = function()
-					local null_ls = require("null-ls")
-					null_ls.setup({
-						sources = {
-							null_ls.builtins.formatting.clang_format,
-						}
-					})
-				end,
-			},
-			{
-				"jay-babu/mason-null-ls.nvim",
-				opts = {
-					automatic_installation = true,
-					ensure_installed = {
-						"stylua",
-						"gofumpt",
-						"golangci_lint",
-						"clang-format",
-						"prettier",
-						"markdownlint-cli2",
-						"textlint",
-						"cspell",
-						"kdlfmt",
-					},
-					handlers = {},
-				},
-			},
 		},
 		config = function()
+			-- Mason をロードしなくても、インストール済みサーバーを見つけられるようにする。
+			local mason_bin = vim.fs.joinpath(vim.fn.stdpath("data"), "mason", "bin")
+			if vim.fn.isdirectory(mason_bin) == 1 then
+				local path_separator = vim.fn.has("win32") == 1 and ";" or ":"
+				vim.env.PATH = mason_bin .. path_separator .. (vim.env.PATH or "")
+			end
+
 			local capabilities = require("cmp_nvim_lsp").default_capabilities()
 
 			local on_attach = function(_, bufnr)
@@ -232,7 +249,25 @@ return {
 	},
 	{
 		"nvimdev/lspsaga.nvim",
-		event = { "BufReadPre", "BufNewFile" },
+		cmd = { "Lspsaga" },
+		keys = {
+			{ "gf",         "<cmd>Lspsaga finder<cr>",                     desc = "LSP finder" },
+			{ "ga",         "<cmd>Lspsaga code_action<cr>",                mode = { "n", "v" }, desc = "LSP code action" },
+			{ "gp",         "<cmd>Lspsaga peek_definition<cr>",            desc = "Peek definition" },
+			{ "<leader>gp", "<cmd>Lspsaga goto_definition<cr>",            desc = "Go to definition" },
+			{ "gt",         "<cmd>Lspsaga peek_type_definition<cr>",       desc = "Peek type definition" },
+			{ "<leader>gt", "<cmd>Lspsaga goto_type_definition<cr>",       desc = "Go to type definition" },
+			{ "<leader>sl", "<cmd>Lspsaga show_line_diagnostics<cr>",      desc = "Line diagnostics" },
+			{ "<leader>sb", "<cmd>Lspsaga show_buf_diagnostics<cr>",       desc = "Buffer diagnostics" },
+			{ "<leader>sw", "<cmd>Lspsaga show_workspace_diagnostics<cr>", desc = "Workspace diagnostics" },
+			{ "<leader>sc", "<cmd>Lspsaga show_cursor_diagnostics<cr>",    desc = "Cursor diagnostics" },
+			{ "g]",         "<cmd>Lspsaga diagnostic_jump_next<cr>",       desc = "Next diagnostic" },
+			{ "g[",         "<cmd>Lspsaga diagnostic_jump_prev<cr>",       desc = "Previous diagnostic" },
+			{ "<leader>ou", "<cmd>Lspsaga outline<cr>",                    desc = "LSP outline" },
+			{ "K",          "<cmd>Lspsaga hover_doc ++keep<cr>",           desc = "LSP hover" },
+			{ "<leader>ci", "<cmd>Lspsaga incoming_calls<cr>",             desc = "Incoming calls" },
+			{ "<leader>co", "<cmd>Lspsaga outgoing_calls<cr>",             desc = "Outgoing calls" },
+		},
 		dependencies = {
 			"nvim-treesitter/nvim-treesitter",
 			"nvim-tree/nvim-web-devicons",
@@ -263,77 +298,11 @@ return {
 				},
 			})
 
-			local keymap = vim.keymap.set
-			-- LSP finder - Find the symbol's definition
-			-- If there is no definition, it will instead be hidden
-			-- When you use an action in finder like "open vsplit",
-			-- you can use <C-t> to jump back
-			keymap("n", "gf", "<cmd>Lspsaga finder<CR>")
-
-			keymap({ "n", "v" }, "ga", "<cmd>Lspsaga code_action<CR>")
-
-			-- Peek definition
-			-- You can edit the file containing the definition in the floating window
-			-- It also supports open/vsplit/etc operations, do refer to "definition_action_keys"
-			-- It also supports tagstack
-			-- Use <C-t> to jump back
-			keymap("n", "gp", "<cmd>Lspsaga peek_definition<CR>")
-			keymap("n", "<leader>gp", "<cmd>Lspsaga goto_definition<CR>")
-
-			keymap("n", "gt", "<cmd>Lspsaga peek_type_definition<CR>")
-			keymap("n", "<leader>gt", "<cmd>Lspsaga goto_type_definition<CR>")
-
-			-- Go to definition
-			-- keymap("n", "gd", "<cmd>Lspsaga goto_definition<CR>")
-
-			-- Show line diagnostics
-			-- You can pass argument ++unfocus to
-			-- unfocus the show_line_diagnostics floating window
-			keymap("n", "<leader>sl", "<cmd>Lspsaga show_line_diagnostics<CR>")
-
-			-- Show buffer diagnostics
-			keymap("n", "<leader>sb", "<cmd>Lspsaga show_buf_diagnostics<CR>")
-
-			-- Show workspace diagnostics
-			keymap("n", "<leader>sw", "<cmd>Lspsaga show_workspace_diagnostics<CR>")
-
-			-- Show cursor diagnostics
-			keymap("n", "<leader>sc", "<cmd>Lspsaga show_cursor_diagnostics<CR>")
-
-			-- Diagnostic jump
-			-- You can use <C-o> to jump back to your previous location
-			keymap("n", "g]", "<cmd>Lspsaga diagnostic_jump_next<CR>")
-			keymap("n", "g[", "<cmd>Lspsaga diagnostic_jump_prev<CR>")
-
-			-- Toggle outline
-			keymap("n", "<leader>ou", "<cmd>Lspsaga outline<CR>")
-
-			-- Hover Doc
-			-- If there is no hover doc,
-			-- there will be a notification stating that
-			-- there is no information available.
-			-- To disable it just use ":Lspsaga hover_doc ++quiet"
-			-- Pressing the key twice will enter the hover window
-			-- keymap("n", "K", "<cmd>Lspsaga hover_doc<CR>")
-			-- If you want to keep the hover window in the top right hand corner,
-			-- you can pass the ++keep argument
-			-- Note that if you use hover with ++keep, pressing this key again will
-			-- close the hover window. If you want to jump to the hover window
-			-- you should use the wincmd command "<C-w>w"
-			keymap("n", "K", "<cmd>Lspsaga hover_doc ++keep<CR>")
-
-			-- Call hierarchy
-			keymap("n", "<Leader>ci", "<cmd>Lspsaga incoming_calls<CR>")
-			keymap("n", "<Leader>co", "<cmd>Lspsaga outgoing_calls<CR>")
-
-			-- keymap("n", "<Leader>t", "<cmd>Lspsaga term_toggle<CR>")
-			-- Rename
-			-- keymap("n", "<leader>r", "<cmd>Lspsaga lsp_rename ++project<CR>")
 		end,
 	},
 	{
 		"ray-x/lsp_signature.nvim",
-		event = "InsertEnter",
+		event = "LspAttach",
 		config = function()
 			local cfg = {} -- add your config here
 			require "lsp_signature".setup(cfg)
