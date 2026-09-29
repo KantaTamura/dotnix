@@ -38,4 +38,4 @@ vim.keymap.set({ "n", "x", "o" }, "N", "'nN'[v:searchforward]", { expr = true, d
 
 -- format
 vim.keymap.set({ "n" }, "<leader>f", "<cmd>lua vim.lsp.buf.format { async = false }<CR>",
-	{ noremap = true, silent = true })
+	{ noremap = true, silent = true, desc = "LSP: Format buffer" })

@@ -2,9 +2,9 @@
 vim.opt.guifont = "PlemolJP Console:h14"
 
 -- keybindings
-vim.api.nvim_set_keymap("v", "<sc-c>", '"+y', { noremap = true })      -- Select line(s) in visual mode and copy (CTRL+Shift+V)
-vim.api.nvim_set_keymap("i", "<sc-v>", '<ESC>"+p', { noremap = true }) -- Paste in insert mode (CTRL+Shift+C)
-vim.api.nvim_set_keymap("n", "<sc-v>", '"+p', { noremap = true })      -- Paste in normal mode (CTRL+Shift+C)
+vim.keymap.set("v", "<sc-c>", '"+y', { desc = "Copy selection to system clipboard" })
+vim.keymap.set("i", "<sc-v>", '<Esc>"+p', { desc = "Paste from system clipboard" })
+vim.keymap.set("n", "<sc-v>", '"+p', { desc = "Paste from system clipboard" })
 
 -- terminal color
 vim.g.terminal_color_0 = "#45475a"

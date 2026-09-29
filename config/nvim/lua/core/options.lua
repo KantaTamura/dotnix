@@ -27,7 +27,7 @@ local options = {
 	termguicolors  = true,
 
 	-- performance
-	updatetime     = 250,
+	updatetime     = 500,
 	timeout        = true,
 	timeoutlen     = 300,
 	redrawtime     = 1500,

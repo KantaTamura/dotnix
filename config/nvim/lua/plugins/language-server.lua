@@ -81,10 +81,11 @@ return {
 			end
 
 			local capabilities = require("cmp_nvim_lsp").default_capabilities()
+			local gopls_organize_imports_group = vim.api.nvim_create_augroup("GoplsOrganizeImports", { clear = true })
 
 			local on_attach = function(_, bufnr)
-				local map = function(mode, lhs, rhs)
-					vim.keymap.set(mode, lhs, rhs, { buffer = bufnr })
+				local map = function(mode, lhs, rhs, desc)
+					vim.keymap.set(mode, lhs, rhs, { buffer = bufnr, desc = desc })
 				end
 
 				map("n", "<leader>f", function() vim.lsp.buf.format { async = true } end,
@@ -92,7 +93,7 @@ return {
 
 				-- map("n", "K", vim.lsp.buf.hover)
 				-- map("n", "gd", vim.lsp.buf.definition)
-				map("n", "<leader>r", vim.lsp.buf.rename)
+				map("n", "<leader>r", vim.lsp.buf.rename, "LSP: Rename symbol")
 				-- map("n", "ga", vim.lsp.buf.code_action)
 			end
 
@@ -101,11 +102,19 @@ return {
 					settings = {},
 					on_attach = function(client, bufnr)
 						on_attach(client, bufnr)
+						vim.api.nvim_clear_autocmds({ group = gopls_organize_imports_group, buffer = bufnr })
 						vim.api.nvim_create_autocmd("BufWritePre", {
-							pattern = "*.go",
+							group = gopls_organize_imports_group,
+							buffer = bufnr,
 							callback = function()
-								vim.lsp.buf.code_action({ context = { only = { "source.organizeImports" } }, apply = true })
-							end
+								vim.lsp.buf.code_action({
+									context = { only = { "source.organizeImports" } },
+									apply = true,
+									filter = function(_, client_id)
+										return client_id == client.id
+									end,
+								})
+							end,
 						})
 					end,
 				},
@@ -310,7 +319,7 @@ return {
 	},
 	{
 		"j-hui/fidget.nvim",
-		tag = "legacy",
+		version = "*",
 		event = "LspAttach",
 		opts = {
 			-- options

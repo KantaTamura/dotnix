@@ -81,21 +81,6 @@ return {
 			require("copilot_cmp").setup()
 		end,
 	},
-	{
-		"CopilotC-Nvim/CopilotChat.nvim",
-		branch = "canary",
-		cmd = { "CopilotChatOpen" },
-		dependencies = {
-			{ "zbirenbaum/copilot.lua" }, -- or github/copilot.vim
-			{ "nvim-lua/plenary.nvim" }, -- for curl, log wrapper
-		},
-		build = "make tiktoken", -- Only on MacOS or Linux
-		opts = {
-			debug = true,        -- Enable debugging
-			-- See Configuration section for rest
-		},
-		-- See Commands section for default commands if you want to lazy load on them
-	},
 	-- {
 	-- 	"yetone/avante.nvim",
 	-- 	event = { "InsertEnter", "LspAttach" },
@@ -196,6 +181,9 @@ return {
 		config = function()
 			require("noice").setup({
 				lsp = {
+					progress = {
+						enabled = false,
+					},
 					-- override markdown rendering so that **cmp** and other plugins use **Treesitter**
 					override = {
 						["vim.lsp.util.convert_input_to_markdown_lines"] = true,

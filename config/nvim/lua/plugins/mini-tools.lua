@@ -1,8 +1,9 @@
 return {
 	{
-		"echasnovski/mini.ai",
+		"nvim-mini/mini.ai",
 		version = "*",
 		event = "VeryLazy",
+		opts = {},
 	},
 	{
 		"echasnovski/mini.indentscope",
@@ -14,18 +15,6 @@ return {
 		opts = {
 			symbol = "│", -- or "|", "¦", "┆", "┊", ""
 		},
-	},
-	{
-		"echasnovski/mini.comment",
-		version = "*",
-		event = "VeryLazy",
-		-- config = function()
-		--     require("mini.comment").setup(
-		--         {
-
-		--         }
-		--     )
-		-- end
 	},
 	{
 		"echasnovski/mini.pairs",
