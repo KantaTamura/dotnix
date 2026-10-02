@@ -72,11 +72,13 @@ in
       "microsoft-excel"
       "microsoft-powerpoint"
       "microsoft-word"
+      "obsidian"
       "raycast"
       "scroll-reverser"
       "slack"
       "steam"
       "tailscale-app"
+      "thunderbird"
     ];
 
     masApps = {
