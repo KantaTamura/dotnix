@@ -10,6 +10,7 @@ This repository contains my Nix-managed system and user configuration.
 - `modules/nixos/`: NixOS-only modules
 - `profiles/`: reusable system profiles
 - `hosts/nixos/`: machine-specific host definitions
+- `docs/`: service-specific setup and maintenance guides
 - `home/`: Home Manager profiles and per-user modules
 
 ## Initial Setup
@@ -41,6 +42,9 @@ Apply a host from this repository directly:
 ```bash
 sudo nixos-rebuild switch --flake github:KantaTamura/dotnix#ms-a2
 ```
+
+For Home Assistant setup and maintenance on `ms-a2`, see
+[Home Assistant](docs/home-assistant.md).
 
 ### Home Manager
 
