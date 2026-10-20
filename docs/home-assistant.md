@@ -35,16 +35,52 @@ or apps (formerly add-ons). USB radios for protocols such as Zigbee and Z-Wave
 require additional device configuration. See the
 [official Container installation guide](https://www.home-assistant.io/installation/linux#install-home-assistant-container).
 
-## Catppuccin theme
+## HACS
 
-Nix downloads the pinned [Catppuccin v2.1.3 release](https://github.com/catppuccin/home-assistant/releases/tag/v2.1.3)
-and mounts `catppuccin.yaml` read-only at `/config/themes/catppuccin.yaml`.
-It includes Latte, Frappé, Macchiato, and Mocha with the default mauve accent.
-HACS is not required. Update the URL and SHA-256 in
-`hosts/nixos/ms-a2/default.nix` to upgrade the theme.
+HACS manages community integrations, dashboard extensions, and themes in the
+writable `/config` directory. Its files persist under
+`/var/lib/home-assistant/custom_components/hacs` across container replacements
+and NixOS rebuilds. Install and update extensions through HACS.
 
-After rebuilding, enable theme loading once in
-`/var/lib/home-assistant/configuration.yaml`:
+The pinned Home Assistant 2026.10.2 image uses HACS as a custom integration.
+Follow the [official Container installation instructions](https://www.hacs.xyz/docs/use/download/download/).
+After backing up the configuration and rebuilding NixOS, open a shell:
+
+```bash
+sudo docker exec -it home-assistant bash
+```
+
+Inside the container, download and run the official installer once:
+
+```bash
+cd /config
+wget -O /tmp/get-hacs.sh https://get.hacs.xyz
+bash /tmp/get-hacs.sh
+exit
+```
+
+Skip the installer if HACS is already installed. Restart Home Assistant:
+
+```bash
+sudo systemctl restart docker-home-assistant
+```
+
+In Home Assistant, hard-refresh the browser, open **Settings > Devices &
+services > Add integration**, and select **HACS**. Follow the prompts to
+authorize HACS using GitHub's device-code flow. Complete this in your own browser;
+do not put tokens in this repository. See the [initial configuration guide](https://www.hacs.xyz/docs/use/configuration/basic/).
+
+HACS does not install Supervisor apps. When upgrading Home Assistant to 2026.11 or later,
+consult the current HACS migration instructions: upstream documents a transition
+to the built-in Marketplace for those releases.
+
+## Catppuccin theme via HACS
+
+Catppuccin is installed and updated through HACS. Nix no longer downloads or
+mounts the theme file. If migrating from the previous Nix-managed installation,
+rebuild NixOS first to remove the read-only bind mount.
+
+Enable theme loading in `/var/lib/home-assistant/configuration.yaml`:
 
 ```yaml
 frontend:
@@ -61,6 +97,24 @@ Check the configuration and restart Home Assistant:
 sudo docker exec home-assistant python -m homeassistant --script check_config --config /config
 sudo systemctl restart docker-home-assistant
 ```
+
+The old file bind mount may leave an empty file at
+`/var/lib/home-assistant/themes/catppuccin.yaml`. If that file remains, move it
+outside the themes directory after rebuilding and before reloading themes:
+
+```bash
+sudo mkdir -p /var/lib/home-assistant/theme-backups
+sudo mv /var/lib/home-assistant/themes/catppuccin.yaml /var/lib/home-assistant/theme-backups/catppuccin.yaml.pre-hacs
+```
+
+Skip this step if the old file does not exist. Moving it also avoids duplicate
+theme definitions if a previous manual copy exists. HACS manages its own theme
+files under `/config/themes/`.
+
+In HACS, search for **Catppuccin**, select the theme repository
+`catppuccin/home-assistant`, and download it. This installs Latte, Frappé,
+Macchiato, and Mocha with the default mauve accent. Run `frontend.reload_themes`
+from **Developer tools > Actions** after downloading.
 
 Open your Home Assistant profile and select a Catppuccin theme under
 **Browser settings > Theme**. This selection applies to the current browser;

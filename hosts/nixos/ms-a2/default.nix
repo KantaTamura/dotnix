@@ -1,15 +1,4 @@
-{
-  self,
-  hostName,
-  pkgs,
-  ...
-}:
-let
-  catppuccinTheme = pkgs.fetchurl {
-    url = "https://github.com/catppuccin/home-assistant/releases/download/v2.1.3/catppuccin.yaml";
-    sha256 = "508ea0f4db33892cdee73506ce5d838e01baf11fb3ecdb55d5b0b8de9d452155";
-  };
-in
+{ self, hostName, ... }:
 {
   imports = [
     (self + /hosts/nixos/${hostName}/hardware-configuration.nix)
@@ -32,7 +21,6 @@ in
       environment.TZ = "Asia/Tokyo";
       volumes = [
         "/var/lib/home-assistant:/config"
-        "${catppuccinTheme}:/config/themes/catppuccin.yaml:ro"
         "/run/dbus:/run/dbus:ro"
       ];
       # Bluetooth discovery and adapter recovery through the host's BlueZ.
