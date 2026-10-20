@@ -35,6 +35,39 @@ or apps (formerly add-ons). USB radios for protocols such as Zigbee and Z-Wave
 require additional device configuration. See the
 [official Container installation guide](https://www.home-assistant.io/installation/linux#install-home-assistant-container).
 
+## Catppuccin theme
+
+Nix downloads the pinned [Catppuccin v2.1.3 release](https://github.com/catppuccin/home-assistant/releases/tag/v2.1.3)
+and mounts `catppuccin.yaml` read-only at `/config/themes/catppuccin.yaml`.
+It includes Latte, Frappé, Macchiato, and Mocha with the default mauve accent.
+HACS is not required. Update the URL and SHA-256 in
+`hosts/nixos/ms-a2/default.nix` to upgrade the theme.
+
+After rebuilding, enable theme loading once in
+`/var/lib/home-assistant/configuration.yaml`:
+
+```yaml
+frontend:
+  themes: !include_dir_merge_named themes
+```
+
+If `frontend:` already exists, add `themes:` to that section instead of creating
+a duplicate key. Preserve the other configuration settings. If theme loading is
+already configured with this include, no edit is needed.
+
+Check the configuration and restart Home Assistant:
+
+```bash
+sudo docker exec home-assistant python -m homeassistant --script check_config --config /config
+sudo systemctl restart docker-home-assistant
+```
+
+Open your Home Assistant profile and select a Catppuccin theme under
+**Browser settings > Theme**. This selection applies to the current browser;
+repeat it on other devices as needed. For later theme updates, run the
+`frontend.reload_themes` action from **Developer tools > Actions** or restart
+Home Assistant. See the [upstream installation instructions](https://github.com/catppuccin/home-assistant#usage).
+
 ## Bluetooth and SwitchBot CO2 meter
 
 The host enables BlueZ and powers Bluetooth adapters on at boot. Home Assistant

@@ -1,4 +1,15 @@
-{ self, hostName, ... }:
+{
+  self,
+  hostName,
+  pkgs,
+  ...
+}:
+let
+  catppuccinTheme = pkgs.fetchurl {
+    url = "https://github.com/catppuccin/home-assistant/releases/download/v2.1.3/catppuccin.yaml";
+    sha256 = "508ea0f4db33892cdee73506ce5d838e01baf11fb3ecdb55d5b0b8de9d452155";
+  };
+in
 {
   imports = [
     (self + /hosts/nixos/${hostName}/hardware-configuration.nix)
@@ -21,6 +32,7 @@
       environment.TZ = "Asia/Tokyo";
       volumes = [
         "/var/lib/home-assistant:/config"
+        "${catppuccinTheme}:/config/themes/catppuccin.yaml:ro"
         "/run/dbus:/run/dbus:ro"
       ];
       # Bluetooth discovery and adapter recovery through the host's BlueZ.
@@ -45,6 +57,7 @@
 
   systemd.tmpfiles.rules = [
     "d /var/lib/home-assistant 0700 root root -"
+    "d /var/lib/home-assistant/themes 0755 root root -"
   ];
 
   networking.firewall.interfaces.enp3s0.allowedTCPPorts = [ 8123 ];
