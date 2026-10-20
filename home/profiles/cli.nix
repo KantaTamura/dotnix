@@ -136,11 +136,22 @@ in
       format = "ssh";
       key = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAICj1XLN1IL30Mm5T4VT6htUJTfKQpQ/Hx21kW+tBIqTq";
       signByDefault = true;
-      signer =
-        if pkgs.stdenv.hostPlatform.isDarwin then
-          "/Applications/1Password.app/Contents/MacOS/op-ssh-sign"
-        else
-          "/opt/1Password/op-ssh-sign";
+      signer = toString (
+        pkgs.writeShellScript "git-ssh-sign" ''
+          if [ -n "''${SSH_CONNECTION:-}" ] || [ -n "''${SSH_TTY:-}" ]; then
+            exec ${pkgs.openssh}/bin/ssh-keygen "$@"
+          fi
+
+          exec ${
+            lib.escapeShellArg (
+              if pkgs.stdenv.hostPlatform.isDarwin then
+                "/Applications/1Password.app/Contents/MacOS/op-ssh-sign"
+              else
+                "/opt/1Password/op-ssh-sign"
+            )
+          } "$@"
+        ''
+      );
     };
   };
 
