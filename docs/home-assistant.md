@@ -70,7 +70,8 @@ services > Add integration**, and select **HACS**. Follow the prompts to
 authorize HACS using GitHub's device-code flow. Complete this in your own browser;
 do not put tokens in this repository. See the [initial configuration guide](https://www.hacs.xyz/docs/use/configuration/basic/).
 
-HACS does not install Supervisor apps. When upgrading Home Assistant to 2026.11 or later,
+HACS does not install Supervisor apps such as Matter Server; that container
+remains managed by Nix. When upgrading Home Assistant to 2026.11 or later,
 consult the current HACS migration instructions: upstream documents a transition
 to the built-in Marketplace for those releases.
 
@@ -121,6 +122,70 @@ Open your Home Assistant profile and select a Catppuccin theme under
 repeat it on other devices as needed. For later theme updates, run the
 `frontend.reload_themes` action from **Developer tools > Actions** or restart
 Home Assistant. See the [upstream installation instructions](https://github.com/catppuccin/home-assistant#usage).
+
+## Matter and Nature Remo Lapis
+
+`ms-a2` also runs Matter.js Server 1.4.0 in a host-networked container.
+Home Assistant connects to its WebSocket API at `ws://127.0.0.1:5580/ws`.
+The API listens only on loopback; port 5580 does not need LAN access.
+Matter discovery and device traffic use `enp3s0`: mDNS UDP 5353 and IPv6
+link-local UDP are allowed on that interface. Matter uses dynamic UDP ports,
+so opening only UDP 5540 is insufficient. IPv6 must remain enabled on the host.
+See the [server network requirements](https://github.com/matter-js/matterjs-server/blob/v1.4.0/docs/os_requirements.md)
+and [container instructions](https://github.com/matter-js/matterjs-server/blob/v1.4.0/docs/docker.md).
+Standalone Matter containers are documented upstream but are outside Home
+Assistant's officially supported Home Assistant OS installation path.
+
+Matter credentials and pairing data persist in `/var/lib/matter-server`, owned
+by UID/GID 1000 to match the image. Back up this directory as well as
+`/var/lib/home-assistant`; stop both containers during backup. Losing the Matter
+data requires pairing the devices again. The image tag is pinned in
+`hosts/nixos/ms-a2/default.nix`.
+
+Nature Remo Lapis bridges registered appliances into Matter over Wi-Fi;
+a Thread border router or Thread USB adapter is not needed for Lapis.
+Use the Nature Home app to set up Lapis, update its firmware, and register the
+appliances first. Available controls depend on what Lapis exposes through
+Matter, rather than every button or sensor in the Nature Home app.
+See [Nature's Lapis specifications](https://nature.global/press/release/20272/).
+
+After applying the NixOS configuration:
+
+1. Verify that Matter Server has started:
+
+   ```bash
+   sudo systemctl status docker-matter-server
+   sudo docker logs --tail 100 matter-server
+   ip -6 addr show dev enp3s0 scope link
+   ```
+
+   The interface should have a `fe80::` link-local address.
+2. In Home Assistant, open **Settings > Devices & services > Add integration >
+   Matter**. If offered an option to install the Matter Server app, deselect it
+   and connect to the existing server at `ws://127.0.0.1:5580/ws`.
+3. Connect the phone to the same LAN as Lapis and `ms-a2`. Allow Bluetooth and
+   local-network permissions for the Home Assistant Companion app. Avoid guest
+   Wi-Fi, client isolation, and multicast filtering during pairing.
+4. For a new Matter pairing, enable Matter linking in the Nature Home app and
+   obtain the setup code. In the Home Assistant Companion app, select
+   **Settings > Devices & services > Add device > Add Matter device**, choose
+   the new-device flow, and scan or enter the code. Complete the phone prompts.
+   Commissioning uses the phone, so Matter Server does not need direct access
+   to the host Bluetooth adapter.
+5. If Lapis is already paired with Apple Home, Google Home, or another Matter
+   controller, use that controller's sharing/pairing mode to generate a new
+   code. In the Companion app, choose the already-in-use flow and enter that
+   code. Keep the existing pairing; do not factory-reset Lapis.
+6. Open the resulting Matter device in Home Assistant, check the bridged
+   appliances, and test a light or another appliance's power control. Add the
+   available entities to a dashboard or automation as needed.
+
+See the [Home Assistant Matter pairing instructions](https://www.home-assistant.io/integrations/matter/)
+for Android/iOS requirements and the sharing flow. If pairing fails, check
+Matter Server logs and the LAN's IPv6/multicast connectivity before retrying.
+The firewall exception here covers link-local devices on `enp3s0`; devices
+using other routed IPv6 prefixes or separate VLANs need additional networking
+and firewall configuration.
 
 ## Bluetooth and SwitchBot CO2 meter
 
