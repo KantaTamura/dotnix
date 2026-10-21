@@ -136,6 +136,26 @@ and [container instructions](https://github.com/matter-js/matterjs-server/blob/v
 Standalone Matter containers are documented upstream but are outside Home
 Assistant's officially supported Home Assistant OS installation path.
 
+The host runs Avahi on `enp3s0` for IPv4/IPv6 mDNS name resolution and DNS-SD
+browsing, and advertises `ms-a2.local`. UDP 5353 remains restricted to that LAN
+interface. Avahi's multicast reflector is disabled; Lapis, the phone, and
+`ms-a2` should be on the same LAN. Matter.js also implements its own mDNS
+discovery, so Avahi alone does not resolve network or pairing failures.
+
+After rebuilding, check host mDNS and browse Matter advertisements:
+
+```bash
+systemctl status avahi-daemon
+avahi-browse --resolve --terminate _matterc._udp
+avahi-browse --resolve --terminate _matter._tcp
+```
+
+`_matterc._udp` is visible while a device's commissioning window is open;
+`_matter._tcp` is used for operational discovery after pairing. If the expected
+advertisement does not appear, check Lapis pairing mode, Wi-Fi client isolation,
+and multicast filtering. To check this host's `.local` advertisement, resolve
+`ms-a2.local` from another mDNS-capable device on the LAN.
+
 Matter credentials and pairing data persist in `/var/lib/matter-server`, owned
 by UID/GID 1000 to match the image. Back up this directory as well as
 `/var/lib/home-assistant`; stop both containers during backup. Losing the Matter

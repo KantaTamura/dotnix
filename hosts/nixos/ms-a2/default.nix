@@ -8,6 +8,21 @@
   networking.hostName = hostName;
   networking.enableIPv6 = true;
 
+  services.avahi = {
+    enable = true;
+    allowInterfaces = [ "enp3s0" ];
+    ipv4 = true;
+    ipv6 = true;
+    nssmdns4 = true;
+    nssmdns6 = true;
+    # UDP 5353 is already allowed only on the LAN interface below.
+    openFirewall = false;
+    publish = {
+      enable = true;
+      addresses = true;
+    };
+  };
+
   hardware.bluetooth = {
     enable = true;
     powerOnBoot = true;
