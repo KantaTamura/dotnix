@@ -10,6 +10,7 @@ let
   skillDir = self + /skills;
   recursiveConfigDirs = [
     "bat"
+    "btop"
     "nvim"
     "wezterm"
     "zsh"
