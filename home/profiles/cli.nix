@@ -15,6 +15,7 @@ let
     "gitui"
     "glow"
     "nvim"
+    "television"
     "wezterm"
     "zellij"
     "zsh"

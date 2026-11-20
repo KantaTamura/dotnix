@@ -1,0 +1,13 @@
+[metadata]
+name = "Kconfig"
+description = "Search inside Kconfig with ripgrep"
+requirements = ["rg", "bat"]
+
+[source]
+command = "rg --no-heading --line-number --hidden --glob 'Kconfig*' \"$@\" ."
+display = "[{split:\\::..2}]\t{split:\\::2..}"
+output  = "{split:\\::..2}"
+
+[preview]
+command = "bat -n --color=always '{split:\\::0}'"
+offset = "{split:\\::1}"
