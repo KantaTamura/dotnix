@@ -78,6 +78,7 @@ in
       "slack"
       "steam"
       "tailscale-app"
+      "t3-code"
       "thunderbird"
     ];
 

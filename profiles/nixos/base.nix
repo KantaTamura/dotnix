@@ -1,4 +1,4 @@
-{ self, ... }:
+{ self, pkgs, ... }:
 {
   imports = [
     (self + /modules/common/core.nix)
@@ -13,4 +13,6 @@
     (self + /modules/nixos/system/tempfiles.nix)
     (self + /modules/nixos/system/zram.nix)
   ];
+
+  environment.systemPackages = [ pkgs.t3code ];
 }
