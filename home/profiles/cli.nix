@@ -12,6 +12,7 @@ let
     "bat"
     "btop"
     "bottom"
+    "gitui"
     "nvim"
     "wezterm"
     "zsh"
