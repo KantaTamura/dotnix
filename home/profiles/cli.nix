@@ -13,6 +13,7 @@ let
     "btop"
     "bottom"
     "gitui"
+    "glow"
     "nvim"
     "wezterm"
     "zsh"
