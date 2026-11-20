@@ -16,6 +16,7 @@ let
     "glow"
     "nvim"
     "wezterm"
+    "zellij"
     "zsh"
   ];
   configFiles = [
