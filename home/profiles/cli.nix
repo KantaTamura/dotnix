@@ -71,28 +71,31 @@ in
     MANPAGER = "nvim +Man!";
   };
 
-  home.packages = with pkgs; [
-    awscli2
-    btop
-    codex
-    curl
-    fastfetch
-    fd
-    gettext
-    gh
-    gnumake
-    ninja
-    opencode
-    osc
-    pkg-config
-    ripgrep
-    sheldon
-    sqlite
-    starship
-    tree-sitter
-    unzip
-    wget
-  ] ++ lib.optional config.dotnix.installWezterm pkgs.wezterm;
+  home.packages =
+    with pkgs;
+    [
+      awscli2
+      btop
+      codex
+      curl
+      fastfetch
+      fd
+      gettext
+      gh
+      gnumake
+      ninja
+      opencode
+      osc
+      pkg-config
+      ripgrep
+      sheldon
+      sqlite
+      starship
+      tree-sitter
+      unzip
+      wget
+    ]
+    ++ lib.optional config.dotnix.installWezterm pkgs.wezterm;
 
   programs.bat.enable = true;
 
