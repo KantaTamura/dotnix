@@ -22,6 +22,7 @@ let
     "zsh"
   ];
   configFiles = [
+    "gh/config.yml"
     "sheldon/plugins.toml"
     "starship.toml"
   ];
