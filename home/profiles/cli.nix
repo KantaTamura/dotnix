@@ -97,6 +97,7 @@ in
       ".cache/clangd"
       "compile_commands.json"
       ".codex"
+      ".agents"
       "AGENTS.md"
     ];
     includes = [
