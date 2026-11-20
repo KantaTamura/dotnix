@@ -1,0 +1,65 @@
+{
+	"clock#date": {
+		"timezone": "Asia/Tokyo",
+		"format": "{:L%Y / %m / %d}",
+		"interval": 60,
+	},
+	"clock#time": {
+		"timezone": "Asia/Tokyo",
+		"format": "{:%OH<small><span color='#9399b2'>:</span></small>%OM}",
+		"interval": 60
+	},
+	"group/clock": {
+		"modules": [
+			"clock#time",
+			"clock#date"
+		],
+		"orientation": "inherit"
+	},
+	"mpris": {
+		"format": "{status_icon} {dynamic}",
+		"format-stopped": "",
+		"dynamic-order": ["title", "artist"],
+		"dynamic-separator": " — ",
+		"title-len": 40,
+		"artist-len": 20,
+		"dynamic-len": 60,
+		"status-icons": {
+			"playing": "󰐊",
+			"paused": "󰏤",
+			"stopped": "󰓛"
+		},
+		"tooltip-format": "{player}: {artist} — {title}",
+		"on-click": "playerctl play-pause",
+		"on-click-right": "playerctl next"
+	},
+	"hyprland/workspaces": {
+		"active-only": false,
+		"all-outputs": true,
+		"format": "{icon} <sub>{name}</sub>",
+		"format-icons": {
+			"1": "",
+			"2": "",
+			"3": "",
+			"4": "",
+			"5": "",
+			"6": "",
+			"7": "",
+			"8": "",
+			"9": "",
+			"default": "",
+			"persistent": "",
+			"special": ""
+		},
+		"on-scroll-down": "hyprctl dispatch 'hl.dsp.focus({ workspace = \"e+1\" })'",
+		"on-scroll-up": "hyprctl dispatch 'hl.dsp.focus({ workspace = \"e-1\" })'",
+		"persistent-workspaces": {
+			"*": 10
+		}
+	},
+	"custom/power-button": {
+		"format": "",
+		"on-click": "wlogout",
+		"tooltip": false
+	}
+}

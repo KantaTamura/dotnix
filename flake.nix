@@ -108,6 +108,7 @@
           homeDirectory = "/home/kanta";
           extraModules = [
             ./home/users/kanta
+            ./home/profiles/linux-desktop.nix
           ];
         };
 
