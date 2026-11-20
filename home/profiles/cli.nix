@@ -9,6 +9,7 @@ let
   configDir = self + /config;
   skillDir = self + /skills;
   recursiveConfigDirs = [
+    "bat"
     "nvim"
     "wezterm"
     "zsh"
