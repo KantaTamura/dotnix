@@ -83,11 +83,28 @@ function Keys.setup(config)
             },
         },
     }
+    -- scroll
+    config.max_fps = 120
+    config.scrollback_lines = 10000
+    config.enable_scroll_bar = true
+
     -- mouse bindings
     config.mouse_bindings = {
         -- disable middle click
         { event = { Up   = { streak = 1, button = "Middle" } }, mods = "NONE", action = act.Nop },
         { event = { Down = { streak = 1, button = "Middle" } }, mods = "NONE", action = act.Nop },
+        {
+            event = { Down = { streak = 1, button = { WheelUp = 1 } } },
+            mods = "NONE",
+            action = act.ScrollByLine(-3),
+            alt_screen = false,
+        },
+        {
+            event = { Down = { streak = 1, button = { WheelDown = 1 } } },
+            mods = "NONE",
+            action = act.ScrollByLine(3),
+            alt_screen = false,
+        },
     }
 end
 
