@@ -17,6 +17,7 @@ let
     "nvim"
     "television"
     "wezterm"
+    "zathura"
     "zellij"
     "zsh"
   ];

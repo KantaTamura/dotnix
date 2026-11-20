@@ -1,0 +1,33 @@
+# ズームイン・スームアウトやスクロールの段階
+set zoom-step 20
+set scroll-step 80
+
+# クリップボードを有効にする
+set selection-clipboard clipboard
+
+# インクリメンタル検索を有効にする
+set incremental-search true
+
+# キーバインド
+map u scroll half-up
+map d scroll half-down
+map D toggle_page_mode
+map K zoom in
+map J zoom out
+
+# ステータスバーに表示されるファイルパスのホームディレクトリを ~ に変更
+set statusbar-home-tilde true
+
+# ウインドウタイトルをファイルのbasenameにする
+set window-title-basename true
+
+# UI要素の表示・非表示
+set guioptions cshv
+
+# UIのフォント
+set font monospace 12
+
+# include theme
+include themes/catppuccin-mocha
+
+set recolor "false"
