@@ -11,6 +11,7 @@ let
   recursiveConfigDirs = [
     "bat"
     "btop"
+    "bottom"
     "nvim"
     "wezterm"
     "zsh"
