@@ -96,7 +96,7 @@ function Tabs.setup(config)
     config.show_new_tab_button_in_tab_bar = false
     config.tab_max_width = 50
     config.hide_tab_bar_if_only_one_tab = false
-    config.window_decorations = "RESIZE"
+    config.window_decorations = wezterm.target_triple:match("apple%-darwin$") and "RESIZE" or "NONE"
     -- config.window_decorations = "INTEGRATED_BUTTONS|RESIZE"
     -- config.integrated_title_button_alignment = "Right"
     -- config.integrated_title_buttons = { "Hide", "Close" }
