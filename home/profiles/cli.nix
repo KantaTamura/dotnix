@@ -9,7 +9,6 @@ let
   configDir = self + /config;
   skillDir = self + /skills;
   recursiveConfigDirs = [
-    "lazygit"
     "nvim"
     "wezterm"
     "zsh"
@@ -162,7 +161,38 @@ in
 
   programs.home-manager.enable = true;
 
-  programs.lazygit.enable = true;
+  programs.lazygit = {
+    enable = true;
+    settings = {
+      os.copyToClipboardCmd = "printf %s {{text}} | osc copy";
+      gui = {
+        theme = {
+          selectedLineBgColor = [ "reverse" ];
+          selectedRangeBgColor = [ "reverse" ];
+        };
+        language = "en";
+        nerdFontsVersion = 3;
+      };
+      git =
+        let
+          logCmd = "git log --graph --color=always --date=format:'%Y-%m-%d %H:%M' --pretty=format:'%C(#a0a0a0 reverse)%h%Creset %C(cyan)%ad%Creset %C(#dd4814)%ae%Creset %C(yellow reverse)%d%Creset %n%C(white bold)%s%Creset%n'";
+        in
+        {
+          overrideGpg = true;
+          diffRenderers = [
+            {
+              colorArg = "always";
+              command = "delta --dark --paging=never";
+            }
+          ];
+          commit.signOff = true;
+          log.showWholeGraph = true;
+          parseEmoji = true;
+          branchLogCmd = "${logCmd} {{branchName}} --";
+          allBranchesLogCmds = [ "${logCmd} --" ];
+        };
+    };
+  };
 
   programs.ssh = {
     enable = true;
