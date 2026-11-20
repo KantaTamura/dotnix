@@ -30,6 +30,16 @@ let
   };
 in
 {
+  imports = [
+    {
+      options.dotnix.installWezterm = lib.mkOption {
+        type = lib.types.bool;
+        default = true;
+        description = "Install WezTerm through Home Manager in addition to managing its configuration.";
+      };
+    }
+  ];
+
   xdg.enable = true;
 
   xdg.configFile =
@@ -67,8 +77,7 @@ in
     tree-sitter
     unzip
     wget
-    wezterm
-  ];
+  ] ++ lib.optional config.dotnix.installWezterm pkgs.wezterm;
 
   programs.bat.enable = true;
 

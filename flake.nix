@@ -109,6 +109,7 @@
           extraModules = [
             ./home/users/kanta
             ./home/profiles/linux-desktop.nix
+            { dotnix.installWezterm = false; }
           ];
         };
 
