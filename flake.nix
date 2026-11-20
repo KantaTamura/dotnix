@@ -102,6 +102,15 @@
       };
 
       homeConfigurations = {
+        arch = mkHome {
+          system = "x86_64-linux";
+          username = "kanta";
+          homeDirectory = "/home/kanta";
+          extraModules = [
+            ./home/users/kanta
+          ];
+        };
+
         kanta = mkHome {
           system = "x86_64-linux";
           username = "kanta";
