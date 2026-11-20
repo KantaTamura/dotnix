@@ -10,16 +10,20 @@
 
   services.avahi = {
     enable = true;
-    allowInterfaces = [ "enp3s0" ];
-    ipv4 = true;
-    ipv6 = true;
     nssmdns4 = true;
     nssmdns6 = true;
     # UDP 5353 is already allowed only on the LAN interface below.
     openFirewall = false;
-    publish = {
-      enable = true;
-      addresses = true;
+    settings = {
+      server = {
+        allow-interfaces = [ "enp3s0" ];
+        use-ipv4 = true;
+        use-ipv6 = true;
+      };
+      publish = {
+        disable-publishing = false;
+        publish-addresses = true;
+      };
     };
   };
 
