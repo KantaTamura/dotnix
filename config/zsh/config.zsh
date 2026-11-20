@@ -16,8 +16,9 @@ unsetopt beep
 
 # keybinding
 bindkey -v
-bindkey "^[[A" history-beginning-search-backward
-bindkey "^[[B" history-beginning-search-forward
+source "$XDG_CONFIG_HOME/zsh/histdb_history.zsh"
+bindkey "^[[A" histdb-history-beginning-search-backward
+bindkey "^[[B" histdb-history-beginning-search-forward
 bindkey "^[[3~" delete-char
 bindkey "^[[1~" beginning-of-line
 bindkey "^[[H" beginning-of-line
