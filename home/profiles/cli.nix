@@ -55,6 +55,12 @@ in
     builtins.listToAttrs (map mkRecursiveConfigEntry recursiveConfigDirs)
     // builtins.listToAttrs (map mkConfigFileEntry configFiles);
 
+  # Store timestamps cannot invalidate zsh's compiled caches reliably.
+  home.activation.clearZshCompiledCache = lib.hm.dag.entryAfter [ "linkGeneration" ] ''
+    run ${pkgs.findutils}/bin/find ${lib.escapeShellArg "${config.xdg.configHome}/zsh"} \
+      -type f -name '*.zwc' -delete
+  '';
+
   home.file.".agents/skills/commit-rule" = {
     source = skillDir + "/commit-rule";
     recursive = true;
