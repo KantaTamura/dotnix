@@ -2,12 +2,20 @@
 let
   configDirs = [
     "fcitx5"
+    "foot"
+    "fontconfig"
+    "gtk-3.0"
     "hypr"
     "waybar"
     "rofi"
     "mako"
     "wlogout"
     "xdg-desktop-portal"
+  ];
+  configFiles = [
+    "mimeapps.list"
+    "user-dirs.dirs"
+    "user-dirs.locale"
   ];
 in
 {
@@ -24,5 +32,9 @@ in
         recursive = true;
       };
     }) configDirs
+    ++ map (name: {
+      inherit name;
+      value.source = self + "/config/${name}";
+    }) configFiles
   );
 }
