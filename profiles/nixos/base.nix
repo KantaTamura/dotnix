@@ -15,4 +15,5 @@
   ];
 
   environment.systemPackages = [ pkgs.t3code ];
+  programs.nix-ld.enable = true;
 }
