@@ -2,6 +2,7 @@
 {
   users.users.kanta = {
     isNormalUser = true;
+    linger = true;
     description = "Kanta Tamura";
     shell = pkgs.zsh;
     extraGroups = [

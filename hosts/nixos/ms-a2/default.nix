@@ -1,4 +1,4 @@
-{ self, hostName, ... }:
+{ self, hostName, pkgs, ... }:
 {
   imports = [
     (self + /hosts/nixos/${hostName}/hardware-configuration.nix)
@@ -7,6 +7,16 @@
 
   networking.hostName = hostName;
   networking.enableIPv6 = true;
+
+  home-manager.users.kanta.systemd.user.services.paseo = {
+    Unit.Description = "Paseo Daemon";
+    Service = {
+      ExecStart = "${pkgs.paseo}/bin/paseo daemon run";
+      Restart = "on-failure";
+      RestartSec = 5;
+    };
+    Install.WantedBy = [ "default.target" ];
+  };
 
   services.avahi = {
     enable = true;
@@ -90,6 +100,7 @@
   ];
 
   networking.firewall = {
+    interfaces.tailscale0.allowedTCPPorts = [ 6767 ];
     interfaces.enp3s0 = {
       allowedTCPPorts = [ 8123 ];
       allowedUDPPorts = [ 5353 ];
