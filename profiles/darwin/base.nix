@@ -35,6 +35,7 @@ in
 
   homebrew = {
     enable = true;
+    onActivation.cleanup = "uninstall";
 
     taps = [
       "FelixKratz/formulae"
