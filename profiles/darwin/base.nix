@@ -35,7 +35,8 @@ in
 
   homebrew = {
     enable = true;
-    onActivation.cleanup = "uninstall";
+    # Preserve apps installed outside this configuration, including App Store apps.
+    onActivation.cleanup = "none";
 
     taps = [
       "FelixKratz/formulae"
