@@ -166,7 +166,10 @@ sudo darwin-rebuild switch --flake .#macbook
 
 On macOS, Homebrew itself is still installed outside Nix. The Brew formulae,
 casks, and App Store apps listed in the Darwin profile are reconciled when the
-Darwin configuration is applied.
+Darwin configuration is applied. Every `darwin-rebuild switch` refreshes Homebrew
+package information and upgrades declared packages, including casks with their
+own update mechanism. Undeclared packages are left installed. Homebrew package
+versions are not pinned by `flake.lock`.
 
 ## Verify
 

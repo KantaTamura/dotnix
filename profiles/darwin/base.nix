@@ -35,8 +35,14 @@ in
 
   homebrew = {
     enable = true;
-    # Preserve apps installed outside this configuration, including App Store apps.
-    onActivation.cleanup = "none";
+    onActivation = {
+      autoUpdate = true;
+      upgrade = true;
+      # Preserve apps installed outside this configuration, including App Store apps.
+      cleanup = "none";
+    };
+    # Include casks with their own update mechanism, such as Raycast.
+    greedyCasks = true;
 
     taps = [
       "FelixKratz/formulae"
