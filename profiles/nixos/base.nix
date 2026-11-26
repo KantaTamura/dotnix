@@ -1,4 +1,4 @@
-{ self, ... }:
+{ self, pkgs, ... }:
 {
   imports = [
     (self + /modules/common/core.nix)
@@ -14,5 +14,6 @@
     (self + /modules/nixos/system/zram.nix)
   ];
 
+  environment.systemPackages = [ pkgs.paseo ];
   programs.nix-ld.enable = true;
 }
