@@ -46,10 +46,6 @@ export SQLITE_HISTORY=$XDG_CACHE_HOME/sqlite_history
 # dotnet
 export DOTNET_CLI_HOME=$XDG_DATA_HOME/dotnet
 
-# t3 code
-export T3CODE_TELEMETRY_ENABLED=false
-export T3CODE_OTEL_SDK_DISABLED=true
-
 # less
 export LESSKEYIN=$XDG_CONFIG_HOME/less/lesskey
 export LESSHISTFILE=$XDG_STATE_HOME/less/history

@@ -1,4 +1,4 @@
-{ self, pkgs, ... }:
+{ self, ... }:
 {
   imports = [
     (self + /modules/common/core.nix)
@@ -14,6 +14,5 @@
     (self + /modules/nixos/system/zram.nix)
   ];
 
-  environment.systemPackages = [ pkgs.t3code ];
   programs.nix-ld.enable = true;
 }
